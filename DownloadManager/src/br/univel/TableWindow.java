@@ -104,6 +104,11 @@ public class TableWindow extends JFrame {
 		textField_1.setColumns(10);
 		
 		JButton btnDownload = new JButton("Download");
+		btnDownload.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				download();
+			}
+		});
 		GridBagConstraints gbc_btnDownload = new GridBagConstraints();
 		gbc_btnDownload.gridwidth = 2;
 		gbc_btnDownload.insets = new Insets(0, 0, 5, 0);
@@ -119,9 +124,6 @@ public class TableWindow extends JFrame {
 		gbc_scrollPane.gridy = 3;
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-
 		RendererBar loadingBar = new RendererBar();
 		RendererBar completedBar = new RendererBar() {
 			{
@@ -129,6 +131,19 @@ public class TableWindow extends JFrame {
 				setString("Completed");
 			}
 		};
+		
+		table = new JTable(dtm){
+			@Override
+			public TableCellRenderer getCellRenderer(int row, int column) {
+				if (column == Download.PROGRESS_NUMER) {
+					return (float)dtm.getValueAt(row, column) == 100 ? completedBar : loadingBar;
+				}
+				
+				return super.getCellRenderer(row, column);
+			}
+		};
+		scrollPane.setViewportView(table);
+
 	}
 
 	protected void download() {
