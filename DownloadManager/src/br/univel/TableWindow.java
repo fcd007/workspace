@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class TableWindow extends JFrame {
 
@@ -147,10 +148,13 @@ public class TableWindow extends JFrame {
 	}
 
 	protected void download() {
-		Download d = new Download();
-		d.setOrigem("http://www.univel.br/arq.zip");
-		d.setDestino("c:\\rq.zip");
+		if (textField.getText().equals("") || textField_1.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Existem campos em branco");
+			return;
+		}
+		Download d = new Download(textField.getText(), textField_1.getText());
 		dtm.insertDownload(d);
+		
 	}
 
 }

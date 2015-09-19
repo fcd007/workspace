@@ -7,6 +7,11 @@ public class Download {
 	
 	public static final int PROGRESS_NUMER = 2;
 	
+	public Download(String origem, String destino){
+		this.origem = origem;
+		this.destino = destino;
+	}
+	
 	public String getOrigem() {
 		return origem;
 	}

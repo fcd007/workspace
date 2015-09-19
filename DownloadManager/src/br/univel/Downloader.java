@@ -1,18 +1,30 @@
 package br.univel;
+
 /**
  * @author Gasparzinho 15/09/2015
  */
 import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-public class Downloader implements DownloadInformation {
+public class Downloader extends DownloadInformation {
 
 	private FileOutputStream fos;
 	private ReadableByteChannel rbc;
+	private float progress;
+	public float getProgress() {
+		return progress;
+	}
+
+	public void setProgress(float progress) {
+		this.progress = progress;
+	}
+
+	public static final int PROGRESS_NUMER = 2;
 
 	/**
 	 * 
@@ -25,8 +37,7 @@ public class Downloader implements DownloadInformation {
 
 		try {
 			url = new URL(remoteURL);
-			rbc = new ProgressoDecoratorImpl(Channels.newChannel(url.openStream()),
-					contentLength(url), this);
+			rbc = new ProgressoDecoratorImpl(Channels.newChannel(url.openStream()), contentLength(url), this);
 			fos = new FileOutputStream(localPath);
 
 		} catch (Exception e) {
@@ -47,12 +58,6 @@ public class Downloader implements DownloadInformation {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void informarProgresso(ProgressoDecoratorImpl rbc, double progress) {
-		System.out.println(String.format(
-				"Progresso %d bytes recebidos, %.02f%%", rbc.getReadSoFar(),
-				progress));
 	}
 
 	/**
