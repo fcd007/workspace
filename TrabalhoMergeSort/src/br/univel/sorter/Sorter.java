@@ -1,6 +1,7 @@
-package br.univel.Sorters;
+package br.univel.sorter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class Sorter {
@@ -18,6 +19,14 @@ public class Sorter {
 			randomNumbers.add(r.nextInt(size));
 		}
 		return randomNumbers;
+	}
+	
+	public ArrayList<Integer> generateNumbers(int size){
+		ArrayList<Integer> numbers = new ArrayList<Integer>();
+		for (int i = 0; i < size; i++) {
+			numbers.add(i);
+		}
+		return numbers;
 	}
 
 	public ArrayList<Object> selectPrimes(ArrayList<Integer> randomNumbers) {
@@ -83,91 +92,100 @@ public class Sorter {
 			return false;
 	}
 
-	public int ordena(ArrayList<Object> numbers) {
-		int cont = 0;
+	public void ordena(ArrayList<Object> array) {
+//		int cont = 0;
+		Object[] numbers = array.toArray();
 		int aux = 0;
-		for (int i = 0; i < numbers.size(); i++) {
-			for (int j = 0; j < numbers.size() - 1; j++) {
-				if ((Integer)numbers.get(j) > (Integer)numbers.get(j + 1)) {
-					aux = (Integer)numbers.get(j);
-					numbers.set(j, numbers.get(j + 1));
-					numbers.set(j + 1, aux);
+		for (int i = 0; i < numbers.length; i++) {
+			for (int j = 0; j < numbers.length - 1; j++) {
+				if ((int)numbers[j] > (int)numbers[j+1]) {
+					aux = (int)numbers[j];
+					numbers[j] = numbers[j+1];
+					numbers[j+1]= aux;
 				}
-				cont++;
+//				cont++;
 
 			}
 		}
-		return cont;
+//		return cont;
+	}
+	
+	public ArrayList<Integer> shuffle(ArrayList<Integer>list ){
+		Collections.shuffle(list);
+		return list;
 	}
 
-	public int ordenaOtimizado(ArrayList<Integer> numbers) {
+	public void ordenaOtimizado(ArrayList<Integer> array) {
+		Object[] numbers = array.toArray();
 		int aux = 0;
-		int cont = 0;
-		for (int i = 0; i < numbers.size(); i++) {
-			for (int j = numbers.size() - 1; j > i; j--) {
-				if (numbers.get(j).compareTo(numbers.get(j - 1)) < 0) {
-					aux = numbers.get(j);
-					numbers.set(j, numbers.get(j - 1));
-					numbers.set(j - 1, aux);
+//		int cont = 0;
+		for (int i = 0; i < numbers.length; i++) {
+			for (int j = numbers.length - 1; j > i; j--) {
+				if ((int)numbers[j] < (int)numbers[j-1]) {
+					aux = (int)numbers[j];
+					numbers[j]= numbers[j-1];
+					numbers[j-1] = aux;
 				}
-				cont++;
+//				cont++;
 
 			}
 		}
-		return cont;
+//		return cont;
 	}
 
-	public int selectionSort(ArrayList<Integer> numbers) {
+	public void selectionSort(ArrayList<Integer> array) {
+		Object[] numbers = array.toArray();
 		int aux = 0;
 		int idx = 0;
-		int count = 0;
-		for (int i = 0; i < numbers.size() - 1; i++) {
-			aux = numbers.get(i);
+//		int count = 0;
+		for (int i = 0; i < numbers.length - 1; i++) {
+			aux = (int)numbers[i];
 			idx = i;
-			for (int j = i + 1; j < numbers.size(); j++) {
-				if (aux > numbers.get(j)) {
-					aux = numbers.get(j);
+			for (int j = i + 1; j < numbers.length; j++) {
+				if (aux > (int)numbers[j]) {
+					aux = (int)numbers[j];
 					idx = j;
 
 				}
 			}
-			if (aux != numbers.get(i)) {
-				count++;
-				numbers.set(idx, numbers.get(i));
-				numbers.set(i, aux);
+			if (aux != (int)numbers[i]) {
+//				count++;
+				numbers[idx]= numbers[i];
+				numbers[i]=aux;
 			}
 		}
-		return count;
+//		return count;
 	}
 
-	public int cocktailSort(ArrayList<Integer> numbers) {
+	public void cocktailSort(ArrayList<Integer> array) {
+		Object[] numbers = array.toArray();
 		boolean swapped;
-		int count = 0;
+//		int count = 0;
 		do {
 			swapped = false;
-			for (int i = 0; i <= numbers.size() - 2; i++) {
-				if (numbers.get(i) > numbers.get(i + 1)) {
-					int temp = numbers.get(i);
-					numbers.set(i, numbers.get(i + 1));
-					numbers.set(i + 1, temp);
+			for (int i = 0; i <= numbers.length - 2; i++) {
+				if ((int)numbers[i] > (int)numbers[i+1]) {
+					int temp = (int)numbers[i];
+					numbers[i]=numbers[i+1];
+					numbers[i+1]=temp;
 					swapped = true;
-					count++;
+//					count++;
 				}
 			}
 			if (!swapped)
 				break;
 			swapped = false;
-			for (int i = numbers.size() - 2; i >= 0; i--) {
-				if (numbers.get(i) > numbers.get(i + 1)) {
-					int temp = numbers.get(i);
-					numbers.set(i, numbers.get(i + 1));
-					numbers.set(i + 1, temp);
+			for (int i = numbers.length - 2; i >= 0; i--) {
+				if ((int)numbers[i] > (int)numbers[i+1]) {
+					int temp = (int)numbers[i];
+					numbers[i]= numbers[i + 1];
+					numbers[i + 1]=temp;
 					swapped = true;
-					count++;
+//					count++;
 				}
 			}
 		} while (swapped);
-		return count;
+//		return count;
 	}
 
 	public long betterValue(String betterName, long betterValue) {

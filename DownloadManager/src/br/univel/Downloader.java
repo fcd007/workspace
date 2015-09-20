@@ -24,8 +24,6 @@ public class Downloader extends DownloadInformation {
 		this.progress = progress;
 	}
 
-	public static final int PROGRESS_NUMER = 2;
-
 	/**
 	 * 
 	 * @param localPath

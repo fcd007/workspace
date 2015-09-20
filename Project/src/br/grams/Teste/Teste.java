@@ -2,6 +2,8 @@ package br.grams.Teste;
 
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class Teste {
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
@@ -18,6 +20,7 @@ public class Teste {
 			
 		}
 		System.out.println(result);
+		
 		
 	}
 }
