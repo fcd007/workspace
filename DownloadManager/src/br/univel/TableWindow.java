@@ -188,7 +188,7 @@ public class TableWindow extends JFrame {
 
 
 	protected void cancelDownload() {
-		if (dtm.lista.get(table.getSelectedRow()).getStatus() == DownloadStatus.RUNNING) {
+		if (table.getSelectedRow()>=0 && dtm.lista.get(table.getSelectedRow()).getStatus() == DownloadStatus.RUNNING) {
 			dtm.lista.get(table.getSelectedRow()).setStatus(DownloadStatus.CANCELLED);
 		}
 	}
