@@ -1,7 +1,7 @@
 package br.univel;
 
 /**
- * @author Gasparzinho 15/09/2015
+ * @author Juliano Grams 15/09/2015
  */
 import java.io.FileOutputStream;
 
@@ -15,14 +15,6 @@ public class Downloader extends DownloadInformation {
 
 	private FileOutputStream fos;
 	private ReadableByteChannel rbc;
-	private float progress;
-	public float getProgress() {
-		return progress;
-	}
-
-	public void setProgress(float progress) {
-		this.progress = progress;
-	}
 
 	/**
 	 * 

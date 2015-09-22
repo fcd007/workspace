@@ -104,18 +104,31 @@ public class TableWindow extends JFrame {
 		contentPane.add(textField_1, gbc_textField_1);
 		textField_1.setColumns(10);
 		
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 2;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 2;
+		contentPane.add(panel, gbc_panel);
+		panel.setLayout(new BorderLayout(0, 0));
+		
 		JButton btnDownload = new JButton("Download");
+		panel.add(btnDownload, BorderLayout.WEST);
+		
+		JButton btnNewButton = new JButton("Cancelar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cancelDownload();
+			}
+		});
+		panel.add(btnNewButton, BorderLayout.EAST);
 		btnDownload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				download();
 			}
 		});
-		GridBagConstraints gbc_btnDownload = new GridBagConstraints();
-		gbc_btnDownload.gridwidth = 2;
-		gbc_btnDownload.insets = new Insets(0, 0, 5, 0);
-		gbc_btnDownload.gridx = 0;
-		gbc_btnDownload.gridy = 2;
-		contentPane.add(btnDownload, gbc_btnDownload);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -132,11 +145,21 @@ public class TableWindow extends JFrame {
 				setString("Completed");
 			}
 		};
+		RendererBar cancelledBar = new RendererBar(){
+			{
+				setForeground(Color.RED);
+				setString("Cancelled");
+			}
+			
+		};
 		
 		table = new JTable(dtm){
 			@Override
 			public TableCellRenderer getCellRenderer(int row, int column) {
 				if (column == Download.PROGRESS_NUMER) {
+					if(dtm.lista.get(row).getStatus() == DownloadStatus.CANCELLED){
+						return cancelledBar;
+					}
 					return (float)dtm.getValueAt(row, column) == 100 ? completedBar : loadingBar;
 				}
 				
@@ -145,6 +168,12 @@ public class TableWindow extends JFrame {
 		};
 		scrollPane.setViewportView(table);
 
+	}
+
+	protected void cancelDownload() {
+		if (dtm.lista.get(table.getSelectedRow()).getStatus() == DownloadStatus.RUNNING) {
+			dtm.lista.get(table.getSelectedRow()).setStatus(DownloadStatus.CANCELLED);
+		}
 	}
 
 	protected void download() {

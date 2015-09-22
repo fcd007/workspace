@@ -18,7 +18,6 @@ public class RendererBar extends JProgressBar implements TableCellRenderer{
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
-		
 		Float f = (float) value;
 		super.setValue(f.intValue());
 		return this;

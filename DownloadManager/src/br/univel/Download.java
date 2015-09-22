@@ -4,7 +4,14 @@ public class Download {
 	private String origem;
 	private String destino;
 	private float progress;
-	
+	private DownloadStatus status;
+	public DownloadStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(DownloadStatus status) {
+		this.status = status;
+	}
 	public static final int PROGRESS_NUMER = 2;
 	
 	public Download(String origem, String destino){

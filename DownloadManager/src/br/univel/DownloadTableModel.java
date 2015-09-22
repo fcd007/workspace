@@ -14,7 +14,7 @@ public class DownloadTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return Download.class.getDeclaredFields().length - 1;
+		return Download.class.getDeclaredFields().length - 2;
 	}
 
 	@Override
@@ -46,38 +46,22 @@ public class DownloadTableModel extends AbstractTableModel {
 	}
 
 	public void insertDownload(Download d) {
-		if(isAlreadyDownloading(d)){
-			JOptionPane.showMessageDialog(null, "Esta url ja foi inserida");
-			return;
-		}
 		this.lista.add(d);
+		d.setStatus(DownloadStatus.RUNNING);
 		DownloadTableModel me = this;
 		super.fireTableDataChanged();
 		int row = lista.size() - 1;
-		
+
 		new Thread(new Runnable() {
-
+			
 			public void run() {
-
 				Downloader downloader = new Downloader(d.getDestino(), d.getOrigem());
 				downloader.setTable(me, row, Download.PROGRESS_NUMER);
 				downloader.iniciarDownload();
 
 			}
 		}).start();
-		
 
 	}
-
-	private boolean isAlreadyDownloading(Download d) {
-		for (int i = 0; i < lista.size(); i++) {
-			if (lista.get(i).getOrigem().equals(d.getOrigem())) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	
 
 }
