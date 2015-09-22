@@ -27,6 +27,9 @@ public abstract class DownloadInformation {
 			}
 		}
 		model.lista.get(this.row).setProgress((float) progress);
+		if (progress ==100 && model.lista.get(this.row).getStatus() == DownloadStatus.RUNNING) {
+			model.lista.get(this.row).setStatus(DownloadStatus.COMPLETED); 
+		}
 		model.fireTableCellUpdated(this.row, this.col);
 	}
 

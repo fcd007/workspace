@@ -5,6 +5,7 @@ public class Download {
 	private String destino;
 	private float progress;
 	private DownloadStatus status;
+
 	public DownloadStatus getStatus() {
 		return status;
 	}

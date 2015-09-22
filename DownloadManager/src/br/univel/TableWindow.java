@@ -29,6 +29,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TableWindow extends JFrame {
 
@@ -64,12 +67,12 @@ public class TableWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] { 0, 0, 0 };
+		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		JLabel lblUrl = new JLabel("URL:");
 		GridBagConstraints gbc_lblUrl = new GridBagConstraints();
 		gbc_lblUrl.anchor = GridBagConstraints.EAST;
@@ -77,7 +80,7 @@ public class TableWindow extends JFrame {
 		gbc_lblUrl.gridx = 0;
 		gbc_lblUrl.gridy = 0;
 		contentPane.add(lblUrl, gbc_lblUrl);
-		
+
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
@@ -86,7 +89,7 @@ public class TableWindow extends JFrame {
 		gbc_textField.gridy = 0;
 		contentPane.add(textField, gbc_textField);
 		textField.setColumns(10);
-		
+
 		JLabel lblNomeDoArquivo = new JLabel("Nome do Arquivo:");
 		GridBagConstraints gbc_lblNomeDoArquivo = new GridBagConstraints();
 		gbc_lblNomeDoArquivo.anchor = GridBagConstraints.EAST;
@@ -94,7 +97,7 @@ public class TableWindow extends JFrame {
 		gbc_lblNomeDoArquivo.gridx = 0;
 		gbc_lblNomeDoArquivo.gridy = 1;
 		contentPane.add(lblNomeDoArquivo, gbc_lblNomeDoArquivo);
-		
+
 		textField_1 = new JTextField();
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
@@ -103,7 +106,7 @@ public class TableWindow extends JFrame {
 		gbc_textField_1.gridy = 1;
 		contentPane.add(textField_1, gbc_textField_1);
 		textField_1.setColumns(10);
-		
+
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridwidth = 2;
@@ -112,32 +115,37 @@ public class TableWindow extends JFrame {
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 2;
 		contentPane.add(panel, gbc_panel);
-		panel.setLayout(new BorderLayout(0, 0));
-		
-		JButton btnDownload = new JButton("Download");
-		panel.add(btnDownload, BorderLayout.WEST);
-		
+
 		JButton btnNewButton = new JButton("Cancelar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cancelDownload();
 			}
 		});
-		panel.add(btnNewButton, BorderLayout.EAST);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+		JButton btnDownload = new JButton("Download");
+		panel.add(btnDownload);
 		btnDownload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				download();
 			}
 		});
-		
+		panel.add(btnNewButton);
+
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridwidth = 2;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 3;
 		contentPane.add(scrollPane, gbc_scrollPane);
-		
+
 		RendererBar loadingBar = new RendererBar();
 		RendererBar completedBar = new RendererBar() {
 			{
@@ -145,30 +153,39 @@ public class TableWindow extends JFrame {
 				setString("Completed");
 			}
 		};
-		RendererBar cancelledBar = new RendererBar(){
+		RendererBar cancelledBar = new RendererBar() {
 			{
 				setForeground(Color.RED);
 				setString("Cancelled");
 			}
-			
+
 		};
-		
-		table = new JTable(dtm){
+
+		table = new JTable(dtm) {
 			@Override
 			public TableCellRenderer getCellRenderer(int row, int column) {
 				if (column == Download.PROGRESS_NUMER) {
-					if(dtm.lista.get(row).getStatus() == DownloadStatus.CANCELLED){
+					if (dtm.lista.get(row).getStatus() == DownloadStatus.CANCELLED) {
 						return cancelledBar;
 					}
-					return (float)dtm.getValueAt(row, column) == 100 ? completedBar : loadingBar;
+					if (dtm.lista.get(row).getStatus() == DownloadStatus.COMPLETED) {
+						return completedBar;
+					}
+					return loadingBar;
 				}
-				
+
 				return super.getCellRenderer(row, column);
 			}
 		};
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		scrollPane.setViewportView(table);
 
 	}
+
 
 	protected void cancelDownload() {
 		if (dtm.lista.get(table.getSelectedRow()).getStatus() == DownloadStatus.RUNNING) {
@@ -183,7 +200,7 @@ public class TableWindow extends JFrame {
 		}
 		Download d = new Download(textField.getText(), textField_1.getText());
 		dtm.insertDownload(d);
-		
+
 	}
 
 }
