@@ -80,8 +80,7 @@ public class SorterWindow extends JFrame {
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
 		gbl_contentPane.rowHeights = new int[] { 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
-				1.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_contentPane.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
@@ -130,7 +129,7 @@ public class SorterWindow extends JFrame {
 	}
 
 	protected void orderAndGenerate() {
-		model.list.clear();
+//		model.list.clear();
 		Sort.sorters.clear();
 		Sort.sorters.add(new BubbleSort1());
 		Sort.sorters.add(new BubbleSort2());
@@ -143,54 +142,54 @@ public class SorterWindow extends JFrame {
 		Sort.generateNumbers(Integer.parseInt(txtTxtelementos.getText()));
 		Sort.shuffle();
 		btnGerarEOrdenar.setEnabled(false);
-		int cores = Runtime.getRuntime().availableProcessors();
-		ExecutorService executor = Executors.newFixedThreadPool(cores);
-
-		for (int i = 0; i < Sort.sorters.size(); i++) {
-			Sort sorter = Sort.sorters.get(i);
-			executor.execute(new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-
-					Sort.countTime(sorter);
-					model.list.add(sorter);
-					Collections.sort(model.list);
-					model.fireTableDataChanged();
-
-				}
-			}));
-		}
-		executor.shutdown();
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					executor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				btnGerarEOrdenar.setEnabled(true);
-
-			}
-		}).start();
-		// Collections.sort(model.list);
-		// model.fireTableDataChanged();
-
-		// new Thread(new Runnable() {
+		// int cores = Runtime.getRuntime().availableProcessors();
+		// ExecutorService executor = Executors.newFixedThreadPool(cores);
+		//
+		// for (int i = 0; i < Sort.sorters.size(); i++) {
+		// Sort sorter = Sort.sorters.get(i);
+		// executor.execute(new Thread(new Runnable() {
+		//
 		// @Override
 		// public void run() {
-		// for (int i = 0; i < Sort.sorters.size(); i++) {
 		//
-		// Sort.countTime(Sort.sorters.get(i));
+		// Sort.countTime(sorter);
+		// model.list.add(sorter);
+		// Collections.sort(model.list);
+		// model.fireTableDataChanged();
+		//
+		// }
+		// }));
+		// }
+		// executor.shutdown();
+		// new Thread(new Runnable() {
+		//
+		// @Override
+		// public void run() {
+		// try {
+		// executor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+		// } catch (InterruptedException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
 		// }
 		// btnGerarEOrdenar.setEnabled(true);
-		// Collections.sort(Sort.sorters);
-		// model.fireTableDataChanged();
+		//
 		// }
 		// }).start();
+//		Collections.sort(model.list);
+//		model.fireTableDataChanged();
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for (int i = 0; i < Sort.sorters.size(); i++) {
+
+					Sort.countTime(Sort.sorters.get(i));
+				}
+				btnGerarEOrdenar.setEnabled(true);
+				Collections.sort(Sort.sorters);
+				model.fireTableDataChanged();
+			}
+		}).start();
 
 	}
 

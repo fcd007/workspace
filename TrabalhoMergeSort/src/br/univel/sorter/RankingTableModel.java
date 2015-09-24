@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class RankingTableModel extends AbstractTableModel{
 	
-	public List<Sort> list = new ArrayList<Sort>();
+	public List<Sort> list = Sort.sorters;
 
 	@Override
 	public int getRowCount() {
