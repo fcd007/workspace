@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class RankingTableModel extends AbstractTableModel{
 	
-	public List<Sort> list = Sort.sorters;
+	public List<Sort> list = new ArrayList<Sort>();
 
 	@Override
 	public int getRowCount() {
@@ -34,7 +34,7 @@ public class RankingTableModel extends AbstractTableModel{
 		switch (columnIndex) {
 		case 0: return (rowIndex+1);
 		case 1: return list.get(rowIndex).getName();
-		case 2: return Sort.numbers.size() < 10000 ? Sort.sorters.get(rowIndex).getTime()+" Nanosegundos" : Sort.sorters.get(rowIndex).getTime()+" Milisegundos";
+		case 2: return Sort.numbers.size() <= 10000 ? list.get(rowIndex).getTime()+" Nanosegundos" : list.get(rowIndex).getTime()+" Milisegundos";
 			
 		default:
 			return null;

@@ -11,7 +11,7 @@ public abstract class Sort implements Comparable<Sort>{
 	public static List<Sort> sorters = new ArrayList<>();
 	public static ArrayList<Integer> numbers = null;
 	
-	public void sort(ArrayList array){}
+	public void sort(ArrayList<Integer> array){}
 
 	public String getName() {
 		return name;

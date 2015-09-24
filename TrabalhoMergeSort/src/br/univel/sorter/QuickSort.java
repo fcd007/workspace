@@ -13,9 +13,9 @@ public class QuickSort extends Sort{
 	}
 	private void quickSort(Object[] numbers, int start, int end) {
 		if (start < end){
-	         int posicaoPivo =split(numbers, start, end);
-	         quickSort(numbers, start, posicaoPivo - 1);
-	         quickSort(numbers, posicaoPivo + 1, end);
+	         int pivotPosition =split(numbers, start, end);
+	         quickSort(numbers, start, pivotPosition - 1);
+	         quickSort(numbers, pivotPosition + 1, end);
 	      }
 	}
 	private int split(Object[] numbers, int start, int end) {
