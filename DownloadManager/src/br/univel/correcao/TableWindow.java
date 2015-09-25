@@ -1,30 +1,21 @@
 package br.univel.correcao;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
+import javax.swing.table.TableCellRenderer;
 import java.awt.GridBagLayout;
-
-
 import java.awt.GridBagConstraints;
-
 import javax.swing.JButton;
-
 import java.awt.Insets;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-
-
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,11 +23,10 @@ import java.awt.event.MouseEvent;
 public class TableWindow extends JFrame {
 
 	private JPanel contentPane;
-	private DownloadTableModel dtm = new DownloadTableModel();
 	private JTextField txtUrl;
 	private JTextField txtArquivo;
 	private JTable table;
-	private DownloadTableModel tableModel= new DownloadTableModel();
+	private DownloadTableModel tableModel = new DownloadTableModel();
 
 	/**
 	 * Launch the application.
@@ -79,7 +69,7 @@ public class TableWindow extends JFrame {
 		contentPane.add(lblUrl, gbc_lblUrl);
 
 		txtUrl = new JTextField();
-		txtUrl.setText("http://centos.ufes.br/7/isos/x86_64/CentOS-7-x86_64-DVD-1503-01.iso");
+		txtUrl.setText("http://eclipse.c3sl.ufpr.br/technology/epp/downloads/release/mars/R/eclipse-jee-mars-R-win32-x86_64.zip");
 		GridBagConstraints gbc_txtUrl = new GridBagConstraints();
 		gbc_txtUrl.insets = new Insets(0, 0, 5, 0);
 		gbc_txtUrl.fill = GridBagConstraints.HORIZONTAL;
@@ -143,9 +133,32 @@ public class TableWindow extends JFrame {
 		gbc_scrollPane.gridy = 3;
 		contentPane.add(scrollPane, gbc_scrollPane);
 
+		RendererBar loadingBar = new RendererBar();
+		RendererBar completedBar = new RendererBar() {
+			{
+				setForeground(Color.decode("#0ca517"));
+				setString("Completed");
+			}
+		};
+		RendererBar cancelledBar = new RendererBar() {
+			{
+				setForeground(Color.RED);
+				setString("Cancelled");
+			}
 
-		table = new JTable();
-		table.setModel(this.tableModel);
+		};
+
+		table = new JTable(tableModel) {
+			@Override
+			public TableCellRenderer getCellRenderer(int row, int column) {
+				if (column == 2) {
+					
+					return loadingBar;
+				}
+
+				return super.getCellRenderer(row, column);
+			}
+		};
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -154,18 +167,20 @@ public class TableWindow extends JFrame {
 		scrollPane.setViewportView(table);
 
 	}
-	private int cont=0;
+
+	private int cont = 0;
 
 	protected void download() {
 		String origem = txtUrl.getText().trim();
-		String destino = origem.substring(origem.lastIndexOf('/')+1)+".zip";
+		String nomeArquivo = origem.substring(origem.lastIndexOf('/') + 1);
+
 		if (cont++ > 0) {
-			String nome = destino.substring(0, destino.lastIndexOf('.')-1);
-			String ext = destino.substring(0, destino.lastIndexOf('.')+1);
-			
-			destino  = nome+ "("+cont+")"+"."+ext;
+			String nome = nomeArquivo.substring(0, nomeArquivo.lastIndexOf('.') - 1);
+			String ext = nomeArquivo.substring(nomeArquivo.lastIndexOf('.') + 1);
+
+			nomeArquivo = nome + "(" + cont + ")" + "." + ext;
 		}
-		Download d = new Download(destino, origem);
+		Download d = new Download(nomeArquivo, origem);
 		tableModel.adicionar(d);
 	}
 

@@ -39,7 +39,7 @@ public class ProgressoDecoratorImpl implements ReadableByteChannel {
 		if ((n = rbc.read(bb)) > 0) {
 			lido += n;
 			progresso = tamanhoEsperado > 0 ? (double) lido / (double) tamanhoEsperado * 100.0 : -1.0;
-			delegate.informarProgresso(this.getReadSoFar(), progresso);
+			delegate.informarProgresso(this.getReadSoFar(), (long)progresso);
 		}
 
 		return n;

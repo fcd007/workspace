@@ -15,12 +15,11 @@ public class Download {
 	private String destino;
 	private int readSoFar;
 	private double progress;
+	private FileOutputStream fos;
+	private ReadableByteChannel rbc;
+	private List<DownloadInformation> listaObservers = new ArrayList<DownloadInformation>();
 	
-	
-	
-	
-	
-	
+
 	public String getOrigem() {
 		return origem;
 	}
@@ -48,9 +47,6 @@ public class Download {
 	
 	
 
-	private FileOutputStream fos;
-	private ReadableByteChannel rbc;
-	private List<DownloadInformation> listaObservers = new ArrayList<DownloadInformation>();
 
 	/**
 	 * 

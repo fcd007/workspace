@@ -7,6 +7,6 @@ import javax.swing.table.AbstractTableModel;
 
 public interface DownloadInformation {
 
-	public void informarProgresso(long readSoFar, double progress);
+	public void informarProgresso(long readSoFar, long progress);
 
 }

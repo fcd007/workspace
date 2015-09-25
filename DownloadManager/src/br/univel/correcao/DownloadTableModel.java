@@ -27,7 +27,7 @@ public class DownloadTableModel extends AbstractTableModel{
 		switch (columnIndex) {
 		case 0: return d.getOrigem();
 		case 1: return d.getDestino();
-		case 2: return d.getDestino();
+		case 2: return d.getProgress();
 		
 
 		default:
@@ -40,7 +40,7 @@ public class DownloadTableModel extends AbstractTableModel{
 		d.addDownloadInformation(new DownloadInformation() {
 			
 			@Override
-			public void informarProgresso(long readSoFar, double progress) {
+			public void informarProgresso(long readSoFar, long progress) {
 //				d.setReadSoFar(readSoFar);
 				d.setProgress(progress);
 				DownloadTableModel.this.fireTableCellUpdated(list.indexOf(d), 2);

@@ -13,9 +13,9 @@ public class Download{
 	private String origem, destino;
 	private FileOutputStream fos;
 	private ReadableByteChannel rbc;
-	private List<DownloadInformation> observerList = new ArrayList<DownloadInformation>();
 	private int readSoFar;
-	private double progress;
+	private float progress;
+	private List<DownloadInformation> observerList = new ArrayList<DownloadInformation>();
 
 	public int getReadSoFar() {
 		return readSoFar;
@@ -25,11 +25,11 @@ public class Download{
 		this.readSoFar = readSoFar;
 	}
 
-	public double getProgress() {
+	public float getProgress() {
 		return progress;
 	}
 
-	public void setProgress(double progress) {
+	public void setProgress(float progress) {
 		this.progress = progress;
 	}
 
@@ -69,14 +69,14 @@ public class Download{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		this.observerList.add(new DownloadInformation() {
-//			
-//			@Override
-//			public void informarProgresso(long readSoFar, double progress) {
-//				System.out.println(progress);
-//				
-//			}
-//		});
+		this.observerList.add(new DownloadInformation() {
+			
+			@Override
+			public void informarProgresso(long readSoFar, long progress) {
+				System.out.println(progress);
+				
+			}
+		});
 	}
 
 	private DownloadInformation getGeneral() {
@@ -84,7 +84,7 @@ public class Download{
 		return new DownloadInformation() {
 
 			@Override
-			public void informarProgresso(long readSoFar, double progress) {
+			public void informarProgresso(long readSoFar, long progress) {
 				for (DownloadInformation downloadInformation : observerList) {
 					downloadInformation.informarProgresso(readSoFar, progress);
 				}
@@ -158,7 +158,7 @@ public class Download{
 		// }).start();
 		// }
 
-		new Thread(() -> iniciarDownload());
+		new Thread(() -> iniciarDownload()).start();
 	}
 
 	public void addDownloadInformation(DownloadInformation downloadInformation) {
