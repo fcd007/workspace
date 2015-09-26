@@ -8,7 +8,7 @@ public class BubbleSort2 extends Sort {
 		this.setName("Bubble Sort 2");
 	}
 	@Override
-	public void sort(ArrayList array) {
+	public void sort(ArrayList<Integer> array) {
 		bubbleSort2(Sort.convertIntegers(array));
 	}
 	

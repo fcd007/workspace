@@ -8,7 +8,7 @@ public class SelectionSort extends Sort{
 		this.setName("Selection Sort");
 	}
 	@Override
-	public void sort(ArrayList array) {
+	public void sort(ArrayList<Integer> array) {
 		selectionSort(Sort.convertIntegers(array));
 	}
 	

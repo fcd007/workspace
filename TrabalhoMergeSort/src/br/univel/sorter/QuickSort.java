@@ -9,7 +9,7 @@ public class QuickSort extends Sort {
 	}
 
 	@Override
-	public void sort(ArrayList array) {
+	public void sort(ArrayList<Integer> array) {
 
 		int[] numbers = Sort.convertIntegers(array);
 		quickSort(numbers);
@@ -28,7 +28,6 @@ public class QuickSort extends Sort {
 	            }
 	          }
 	          else {
-	            // skip[i] += skip[i + skip[i]];
 	            while ((j = skip[i+skip[i]]) > 0) skip[i] += j;
 	            i += skip[i]-1;
 	          }

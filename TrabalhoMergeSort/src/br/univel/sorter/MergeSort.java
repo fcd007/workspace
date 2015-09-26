@@ -9,7 +9,7 @@ public class MergeSort extends Sort{
 		this.setName("Merge Sort");
 	}
 	@Override
-	public void sort(ArrayList array) {
+	public void sort(ArrayList<Integer> array) {
 		
 		Object[] numbers = array.toArray();
 		int start = 0;

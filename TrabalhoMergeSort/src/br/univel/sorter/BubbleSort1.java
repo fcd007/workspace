@@ -9,7 +9,7 @@ public class BubbleSort1 extends Sort{
 	}
 	
 	@Override
-	public void sort(ArrayList array) {
+	public void sort(ArrayList<Integer> array) {
 		bubbleSort1(Sort.convertIntegers(array));
 	}
 	

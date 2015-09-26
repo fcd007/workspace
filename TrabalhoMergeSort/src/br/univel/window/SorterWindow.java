@@ -27,8 +27,6 @@ import java.awt.Dimension;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import java.awt.List;
@@ -49,6 +47,9 @@ public class SorterWindow extends JFrame {
 	private List lstAvaliableSorters;
 	private List lstAddedSorters;
 	private java.util.List<Sort> sorters;
+	private JButton button_2;
+	private JButton button_3;
+	private JPanel buttonPanel;
 
 	/**
 	 * Launch the application.
@@ -86,10 +87,10 @@ public class SorterWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPane.columnWidths = new int[] { 0, 0, 0, 0 };
 		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 0.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
 		JLabel lblElementos = new JLabel("Elementos:");
@@ -120,28 +121,29 @@ public class SorterWindow extends JFrame {
 		GridBagConstraints gbc_btnGerarEOrdenar = new GridBagConstraints();
 		gbc_btnGerarEOrdenar.insets = new Insets(0, 0, 5, 0);
 		gbc_btnGerarEOrdenar.anchor = GridBagConstraints.WEST;
-		gbc_btnGerarEOrdenar.gridx = 5;
+		gbc_btnGerarEOrdenar.gridx = 2;
 		gbc_btnGerarEOrdenar.gridy = 0;
 		contentPane.add(btnGerarEOrdenar, gbc_btnGerarEOrdenar);
 
 		sortesPanel = new JPanel();
+		sortesPanel.setMaximumSize(new Dimension(500, 150));
+		sortesPanel.setMinimumSize(new Dimension(500, 150));
 		GridBagConstraints gbc_sortesPanel = new GridBagConstraints();
-		gbc_sortesPanel.gridwidth = 6;
-		gbc_sortesPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_sortesPanel.gridwidth = 3;
+		gbc_sortesPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_sortesPanel.fill = GridBagConstraints.BOTH;
 		gbc_sortesPanel.gridx = 0;
 		gbc_sortesPanel.gridy = 1;
 		contentPane.add(sortesPanel, gbc_sortesPanel);
 		GridBagLayout gbl_sortesPanel = new GridBagLayout();
 		gbl_sortesPanel.columnWidths = new int[] { 0, 0, 0, 0 };
-		gbl_sortesPanel.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_sortesPanel.rowHeights = new int[] { 0, 0 };
 		gbl_sortesPanel.columnWeights = new double[] { 1.0, 0.0, 1.0, Double.MIN_VALUE };
-		gbl_sortesPanel.rowWeights = new double[] { 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_sortesPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		sortesPanel.setLayout(gbl_sortesPanel);
 
 		scrollPane_1 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
-		gbc_scrollPane_1.gridheight = 4;
 		gbc_scrollPane_1.insets = new Insets(0, 0, 0, 5);
 		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_1.gridx = 0;
@@ -151,21 +153,73 @@ public class SorterWindow extends JFrame {
 		lstAvaliableSorters = new List();
 		scrollPane_1.setViewportView(lstAvaliableSorters);
 
-		button = new JButton(">>");
+		buttonPanel = new JPanel();
+		GridBagConstraints gbc_buttonPanel = new GridBagConstraints();
+		gbc_buttonPanel.insets = new Insets(0, 0, 0, 5);
+		gbc_buttonPanel.fill = GridBagConstraints.BOTH;
+		gbc_buttonPanel.gridx = 1;
+		gbc_buttonPanel.gridy = 0;
+		sortesPanel.add(buttonPanel, gbc_buttonPanel);
+		GridBagLayout gbl_buttonPanel = new GridBagLayout();
+		gbl_buttonPanel.columnWidths = new int[] { 0, 0 };
+		gbl_buttonPanel.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_buttonPanel.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
+		gbl_buttonPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		buttonPanel.setLayout(gbl_buttonPanel);
+
+		button = new JButton(">");
+		GridBagConstraints gbc_button = new GridBagConstraints();
+		gbc_button.fill = GridBagConstraints.HORIZONTAL;
+		gbc_button.insets = new Insets(0, 0, 5, 0);
+		gbc_button.gridx = 0;
+		gbc_button.gridy = 0;
+		buttonPanel.add(button, gbc_button);
+
+		button_1 = new JButton("<");
+		GridBagConstraints gbc_button_1 = new GridBagConstraints();
+		gbc_button_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_button_1.insets = new Insets(0, 0, 5, 0);
+		gbc_button_1.gridx = 0;
+		gbc_button_1.gridy = 1;
+		buttonPanel.add(button_1, gbc_button_1);
+
+		button_2 = new JButton(">>");
+		GridBagConstraints gbc_button_2 = new GridBagConstraints();
+		gbc_button_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_button_2.insets = new Insets(0, 0, 5, 0);
+		gbc_button_2.gridx = 0;
+		gbc_button_2.gridy = 2;
+		buttonPanel.add(button_2, gbc_button_2);
+
+		button_3 = new JButton("<<");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeAllElements();
+			}
+		});
+		GridBagConstraints gbc_button_3 = new GridBagConstraints();
+		gbc_button_3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_button_3.gridx = 0;
+		gbc_button_3.gridy = 3;
+		buttonPanel.add(button_3, gbc_button_3);
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addAllSorters();
+			}
+		});
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeAddedItem();
+			}
+		});
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addSorter();
 			}
 		});
-		GridBagConstraints gbc_button = new GridBagConstraints();
-		gbc_button.insets = new Insets(0, 0, 5, 5);
-		gbc_button.gridx = 1;
-		gbc_button.gridy = 0;
-		sortesPanel.add(button, gbc_button);
 
 		scrollPane_2 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_2 = new GridBagConstraints();
-		gbc_scrollPane_2.gridheight = 4;
 		gbc_scrollPane_2.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_2.gridx = 2;
 		gbc_scrollPane_2.gridy = 0;
@@ -174,21 +228,9 @@ public class SorterWindow extends JFrame {
 		lstAddedSorters = new List();
 		scrollPane_2.setViewportView(lstAddedSorters);
 
-		button_1 = new JButton("<<");
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				removeAddedItem();
-			}
-		});
-		GridBagConstraints gbc_button_1 = new GridBagConstraints();
-		gbc_button_1.insets = new Insets(0, 0, 5, 5);
-		gbc_button_1.gridx = 1;
-		gbc_button_1.gridy = 1;
-		sortesPanel.add(button_1, gbc_button_1);
-
 		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridwidth = 6;
+		gbc_scrollPane.gridwidth = 3;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 2;
@@ -240,6 +282,21 @@ public class SorterWindow extends JFrame {
 		scrollPane.setViewportView(table);
 	}
 
+	protected void removeAllElements() {
+		sorters.clear();
+		lstAddedSorters.removeAll();
+	}
+
+	protected void addAllSorters() {
+		sorters.clear();
+		sorters.addAll(Sort.sorters);
+		lstAddedSorters.removeAll();
+		for (int i = 0; i < Sort.sorters.size(); i++) {
+			lstAddedSorters.add(Sort.sorters.get(i).getName());
+		}
+
+	}
+
 	protected void removeAddedItem() {
 		if (lstAddedSorters.getSelectedIndex() != -1) {
 			sorters.remove(lstAddedSorters.getSelectedIndex());
@@ -279,7 +336,7 @@ public class SorterWindow extends JFrame {
 					btnGerarEOrdenar.setEnabled(true);
 				}
 			}).start();
-		}else{
+		} else {
 			JOptionPane.showMessageDialog(null, "Digite um número de elementos válido");
 		}
 

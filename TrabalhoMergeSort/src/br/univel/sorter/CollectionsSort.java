@@ -9,7 +9,7 @@ public class CollectionsSort  extends Sort{
 		this.setName("Collections Sort");
 	}
 	@Override
-	public void sort(ArrayList array) {
-		Collections.sort((ArrayList<Integer>)array.clone());
+	public void sort(ArrayList<Integer> array) {
+		Collections.sort((ArrayList)array.clone());
 	}
 }

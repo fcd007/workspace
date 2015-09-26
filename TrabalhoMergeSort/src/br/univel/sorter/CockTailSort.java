@@ -8,7 +8,7 @@ public class CockTailSort extends Sort{
 		this.setName("Cocktail Sort");
 	}
 	@Override
-	public void sort(ArrayList array) {
+	public void sort(ArrayList<Integer> array) {
 		cockTailSort(Sort.convertIntegers(array));
 	}
 	
