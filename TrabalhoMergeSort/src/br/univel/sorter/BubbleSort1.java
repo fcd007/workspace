@@ -10,13 +10,16 @@ public class BubbleSort1 extends Sort{
 	
 	@Override
 	public void sort(ArrayList array) {
+		bubbleSort1(Sort.convertIntegers(array));
+	}
+	
+	public void bubbleSort1(int[] numbers){
 //		int cont = 0;
-		Object[] numbers = array.toArray();
 		int aux = 0;
 		for (int i = 0; i < numbers.length; i++) {
 			for (int j = 0; j < numbers.length - 1; j++) {
-				if ((int)numbers[j] > (int)numbers[j+1]) {
-					aux = (int)numbers[j];
+				if (numbers[j] > numbers[j+1]) {
+					aux = numbers[j];
 					numbers[j] = numbers[j+1];
 					numbers[j+1]= aux;
 				}

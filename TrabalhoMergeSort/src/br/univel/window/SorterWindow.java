@@ -270,9 +270,6 @@ public class SorterWindow extends JFrame {
 	}
 
 	protected void orderAndGenerate() {
-		for (int i = 0; i < sorters.size(); i++) {
-			System.out.println(sorters.get(i).getName());
-		}
 		Sort.generateNumbers(Integer.parseInt(txtTxtelementos.getText()));
 		Sort.shuffle();
 

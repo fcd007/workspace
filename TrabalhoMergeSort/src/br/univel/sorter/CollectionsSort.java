@@ -10,6 +10,6 @@ public class CollectionsSort  extends Sort{
 	}
 	@Override
 	public void sort(ArrayList array) {
-		Collections.sort(array);
+		Collections.sort((ArrayList<Integer>)array.clone());
 	}
 }
