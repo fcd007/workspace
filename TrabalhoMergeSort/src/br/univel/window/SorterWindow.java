@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
-
 import br.univel.sorter.BubbleSort1;
 import br.univel.sorter.BubbleSort2;
 import br.univel.sorter.CockTailSort;
@@ -31,11 +30,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
-import java.awt.FlowLayout;
-import javax.swing.JList;
-import java.awt.BorderLayout;
-import java.awt.Checkbox;
+import javax.swing.JOptionPane;
 import java.awt.List;
 
 public class SorterWindow extends JFrame {
@@ -46,7 +41,6 @@ public class SorterWindow extends JFrame {
 	private RankingTableModel model = new RankingTableModel();
 	private JScrollPane scrollPane;
 	private JTable table;
-	ExecutorService executor;
 	private JPanel sortesPanel;
 	private JScrollPane scrollPane_1;
 	private JButton button;
@@ -76,7 +70,7 @@ public class SorterWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public SorterWindow() {
-		executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+		setMinimumSize(new Dimension(529, 398));
 		Sort.sorters.add(new BubbleSort1());
 		Sort.sorters.add(new BubbleSort2());
 		Sort.sorters.add(new SelectionSort());
@@ -87,7 +81,7 @@ public class SorterWindow extends JFrame {
 		sorters = new ArrayList<Sort>();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 398);
+		setBounds(100, 100, 529, 398);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -241,6 +235,8 @@ public class SorterWindow extends JFrame {
 				return super.getCellRenderer(row, column);
 			}
 		};
+		table.getColumnModel().getColumn(0).setMaxWidth(100);
+		table.getColumnModel().getColumn(0).setMinWidth(100);
 		scrollPane.setViewportView(table);
 	}
 
@@ -270,18 +266,22 @@ public class SorterWindow extends JFrame {
 	}
 
 	protected void orderAndGenerate() {
-		Sort.generateNumbers(Integer.parseInt(txtTxtelementos.getText()));
-		Sort.shuffle();
+		Sort.generateNumbers(
+				Integer.parseInt(txtTxtelementos.getText().matches("[0-9]+") ? txtTxtelementos.getText() : "0"));
+		if (Sort.numbers.size() > 1) {
+			Sort.shuffle();
+			btnGerarEOrdenar.setEnabled(false);
 
-		btnGerarEOrdenar.setEnabled(false);
-
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				model.startSorters(sorters);
-				btnGerarEOrdenar.setEnabled(true);
-			}
-		}).start();
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					model.startSorters(sorters);
+					btnGerarEOrdenar.setEnabled(true);
+				}
+			}).start();
+		}else{
+			JOptionPane.showMessageDialog(null, "Digite um número de elementos válido");
+		}
 
 	}
 

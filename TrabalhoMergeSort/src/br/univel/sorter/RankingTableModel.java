@@ -32,10 +32,11 @@ public class RankingTableModel extends AbstractTableModel{
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		Sort sort = list.get(rowIndex);
 		switch (columnIndex) {
 		case 0: return (rowIndex+1);
-		case 1: return list.get(rowIndex).getName();
-		case 2: return list.get(rowIndex).getTime()+" Milissegundos";
+		case 1: return sort.getName();
+		case 2: return sort.getTime()+" "+(Sort.numbers.size() > 10000 ? "Milissegundos" : "Nanossegundos");
 			
 		default:
 			return null;
