@@ -3,17 +3,19 @@ package br.univel.panel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class Painel extends JPanel {
 	// alt+s
 	/**
 	 * Create the panel.
 	 */
-	int cont = 0;
+	int r, g, b = 0;
+	boolean swap;
+	int color;
+	int before;
 
 	public Painel() {
 		setBackground(Color.BLACK);
@@ -21,12 +23,14 @@ public class Painel extends JPanel {
 	}
 
 	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
+	protected void paintComponent(Graphics graphics) {
+		super.paintComponent(graphics);
+		Graphics2D g2 = (Graphics2D) graphics;
+		int r = this.r;
+		int g = this.g;
+		int b = this.b;
 
-		// System.out.println(cont);
-		g2.setColor(new Color(cont, cont, cont));
+		g2.setColor(getRandomColor(color));
 		int w = getWidth() - 1;
 		int h = getHeight() - 1;
 		int widthQ = w / 8;
@@ -46,10 +50,38 @@ public class Painel extends JPanel {
 
 	}
 
+	private Color getRandomColor(int c) {
+		if ((c > 3 && c < 5) || c < 3)
+			r = (int)(Math.random()*100)%254;
+		if (c > 5 && c < 7)
+			g = (int)(Math.random()*100)%254;
+		if (c > 7)
+			b = (int)(Math.random()*100)%254;
+		return new Color(r,g,b);
+		
+	}
+
 	@Override
 	public void repaint() {
-		if (this.cont < 255)
-			cont++;
+		if (r < 255 && g < 255 && b < 255 && swap) {
+			System.out.println(color);
+			r = g = ++b;
+		} else {
+			swap = false;
+			r = g = --b;
+			if (r < 2 && g < 2 && b < 2)
+				this.swap = true;
+			if (swap) {
+				before = color;
+				color = (int) (Math.random() * 10);
+				while (before == color) {
+					color = (int) (Math.random() * 10);
+
+				}
+			}
+
+		}
+
 		super.repaint();
 	}
 

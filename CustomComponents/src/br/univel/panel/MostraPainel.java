@@ -19,7 +19,7 @@ public class MostraPainel {
 		jf.setContentPane(painel);
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(jf.EXIT_ON_CLOSE);
-		Timer timer = new Timer(10, new ActionListener() {
+		Timer timer = new Timer(0, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -27,6 +27,7 @@ public class MostraPainel {
 				
 			}
 		});
+		timer.setInitialDelay(1);
 		timer.start();
 	}
 }
