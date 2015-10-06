@@ -12,10 +12,10 @@ public class Painel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	int r, g, b = 0;
-	boolean swap;
-	Color color;
-	Color before;
+	private int r, g, b, cont = 0;
+	private boolean swap;
+	private int color;
+	private int before;
 
 	public Painel() {
 		setBackground(Color.BLACK);
@@ -26,11 +26,8 @@ public class Painel extends JPanel {
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 		Graphics2D g2 = (Graphics2D) graphics;
-//		int r = this.r;
-//		int g = this.g;
-//		int b = this.b;
 
-		g2.setColor(color);
+		g2.setColor(getRandomColor(color));
 		int w = getWidth() - 1;
 		int h = getHeight() - 1;
 		int widthQ = w / 8;
@@ -51,12 +48,35 @@ public class Painel extends JPanel {
 	}
 
 	private Color getRandomColor(int c) {
-		int r, g, b;
+		switch (c) {
 
-		r = (int) ((Math.random() * 100) % 254);
-		g = (int) ((Math.random() * 100) % 254);
-		b = (int) ((Math.random() * 100) % 254);
-		System.out.println(r + " " + g + " " + " " + b);
+		case 0: {
+			r = b = 0;
+			break;
+		}
+		case 1: {
+			r = g = 0;
+			break;
+		}
+		case 2: {
+			g = b = 0;
+			break;
+		}
+		case 3: {
+			r = 0;
+			break;
+		}
+		case 4: {
+			g = 0;
+			break;
+		}
+		case 5: {
+			b = 0;
+			break;
+		}
+		default:
+			break;
+		}
 		return new Color(r, g, b);
 
 	}
@@ -64,17 +84,17 @@ public class Painel extends JPanel {
 	@Override
 	public void repaint() {
 		if (r < 255 && g < 255 && b < 255 && swap) {
-			r = g = ++b;
+			r = g = b = ++cont;
 		} else {
 			swap = false;
-			r = g = --b;
+			r = g = b = --cont;
 			if (r < 2 && g < 2 && b < 2)
 				this.swap = true;
 			if (swap) {
 				before = color;
-				color = getRandomColor((int) (Math.random() * 10));
+				color = (int) (Math.random() * 10) % 7;
 				while (before == color) {
-					color = getRandomColor((int) (Math.random() * 10));
+					color = (int) (Math.random() * 10) % 7;
 
 				}
 			}
@@ -82,6 +102,7 @@ public class Painel extends JPanel {
 		}
 
 		super.repaint();
+		Toolkit.getDefaultToolkit().sync();
 	}
 
 }

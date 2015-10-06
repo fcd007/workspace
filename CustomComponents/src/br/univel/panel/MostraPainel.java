@@ -12,7 +12,8 @@ public class MostraPainel {
 
 	public static void main(String[] args) {
 		JFrame jf = new JFrame();
-		jf.setSize(500, 500);
+		jf.setSize(496, 498);
+		jf.setResizable(false);
 		// Centraliza
 		jf.setLocationRelativeTo(null);
 		Painel painel = new Painel();
@@ -27,7 +28,7 @@ public class MostraPainel {
 				
 			}
 		});
-		timer.setInitialDelay(1);
+//		timer.setInitialDelay(0);
 		timer.start();
 	}
 }
