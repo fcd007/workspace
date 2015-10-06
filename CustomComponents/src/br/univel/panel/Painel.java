@@ -14,8 +14,8 @@ public class Painel extends JPanel {
 	 */
 	int r, g, b = 0;
 	boolean swap;
-	int color;
-	int before;
+	Color color;
+	Color before;
 
 	public Painel() {
 		setBackground(Color.BLACK);
@@ -26,11 +26,11 @@ public class Painel extends JPanel {
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 		Graphics2D g2 = (Graphics2D) graphics;
-		int r = this.r;
-		int g = this.g;
-		int b = this.b;
+//		int r = this.r;
+//		int g = this.g;
+//		int b = this.b;
 
-		g2.setColor(getRandomColor(color));
+		g2.setColor(color);
 		int w = getWidth() - 1;
 		int h = getHeight() - 1;
 		int widthQ = w / 8;
@@ -51,20 +51,19 @@ public class Painel extends JPanel {
 	}
 
 	private Color getRandomColor(int c) {
-		if ((c > 3 && c < 5) || c < 3)
-			r = (int)(Math.random()*100)%254;
-		if (c > 5 && c < 7)
-			g = (int)(Math.random()*100)%254;
-		if (c > 7)
-			b = (int)(Math.random()*100)%254;
-		return new Color(r,g,b);
-		
+		int r, g, b;
+
+		r = (int) ((Math.random() * 100) % 254);
+		g = (int) ((Math.random() * 100) % 254);
+		b = (int) ((Math.random() * 100) % 254);
+		System.out.println(r + " " + g + " " + " " + b);
+		return new Color(r, g, b);
+
 	}
 
 	@Override
 	public void repaint() {
 		if (r < 255 && g < 255 && b < 255 && swap) {
-			System.out.println(color);
 			r = g = ++b;
 		} else {
 			swap = false;
@@ -73,9 +72,9 @@ public class Painel extends JPanel {
 				this.swap = true;
 			if (swap) {
 				before = color;
-				color = (int) (Math.random() * 10);
+				color = getRandomColor((int) (Math.random() * 10));
 				while (before == color) {
-					color = (int) (Math.random() * 10);
+					color = getRandomColor((int) (Math.random() * 10));
 
 				}
 			}
