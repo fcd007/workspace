@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+import br.univel.panel.triangle.SquarePanel;
+
 public class MostraPainel {
 
 	public static void main(String[] args) {
@@ -16,11 +18,11 @@ public class MostraPainel {
 		jf.setResizable(false);
 		// Centraliza
 		jf.setLocationRelativeTo(null);
-		Painel painel = new Painel();
+		SquarePanel painel = new SquarePanel();
 		jf.setContentPane(painel);
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(jf.EXIT_ON_CLOSE);
-		Timer timer = new Timer(0, new ActionListener() {
+		Timer timer = new Timer(2, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -1,4 +1,4 @@
-package br.univel.panel;
+package br.univel.panel.triangle;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,7 +8,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
-public class Painel extends JPanel {
+public class SquarePanel extends JPanel {
 	// alt+s
 	/**
 	 * Create the panel.
@@ -18,7 +18,7 @@ public class Painel extends JPanel {
 	private int color;
 	private int before;
 
-	public Painel() {
+	public SquarePanel() {
 		setBackground(Color.BLACK);
 
 	}
@@ -46,7 +46,6 @@ public class Painel extends JPanel {
 			for (int i = size; i < getWidth(); i += (2 * widthQ)) {
 				if (cont == 0)
 					g2.fillRect(i + widthQ, 0, widthQ, heightQ);
-				g2.fillPolygon(new Polygon(x,y,n));
 				g2.fillRect(i + widthQ, j + heightQ, widthQ, heightQ);
 				g2.fillRect(i, j, widthQ, heightQ);
 			}
