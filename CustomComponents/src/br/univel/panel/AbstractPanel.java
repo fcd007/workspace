@@ -73,7 +73,7 @@ public abstract class AbstractPanel extends JPanel{
 		} else {
 			swap = false;
 			r = g = b = --cont;
-			if (r < 2 && g < 2 && b < 2)
+			if (r < 1 && g < 1 && b < 1)
 				this.swap = true;
 			if (swap) {
 				before = color;

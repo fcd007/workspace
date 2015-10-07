@@ -20,7 +20,7 @@ public class MostraPainel {
 		jf.setLocationRelativeTo(null);
 		JPanel trianglePanel = new TrianglePanel(8,true);
 		JPanel squarePanel = new SquarePanel(8,true);
-		jf.setContentPane(trianglePanel);
+		jf.setContentPane(squarePanel);
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(jf.EXIT_ON_CLOSE);
 		Timer timer = new Timer(2, new ActionListener() {
