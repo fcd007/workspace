@@ -38,27 +38,27 @@ public class Painel extends JPanel {
 		int cont = 0;
 		int x[] = new int[3];
 		int y[] = new int[3];
-		x[0] = widthQ;
-		x[1] = widthQ+(widthQ/2);
-		x[2] = widthQ*2;
-		y[0] = heightQ;
-		y[1] = 0;
-		y[2] = heightQ;
 		int n = 3;
-//		g2.fillPolygon(new Polygon(x, y, n));
+		// g2.fillPolygon(new Polygon(x, y, n));
 
-		for (int j = heightQ; j < getHeight(); j += (2 * heightQ)) {
-			for (int i = size; i < getWidth(); i += (2 * widthQ)) {
-				if (cont == 0)
-					g2.fillPolygon(new int[]{0+i,(widthQ/2)+i,widthQ+i}, 
-							new int[]{heightQ,0,heightQ}, n);
-//					g2.fillRect(i + widthQ, 0, widthQ, heightQ);
-//				g2.fillRect(i + widthQ, j + heightQ, widthQ, heightQ);
-				g2.fillPolygon(new int[]{widthQ+i,(widthQ+(widthQ/2))+i,(widthQ*2)+i}, 
-						new int[]{heightQ+j,j,heightQ+j}, n);
-//				g2.fillRect(i, j, widthQ, heightQ);
-				g2.fillPolygon(new int[]{i,(widthQ/2)+i,(widthQ)+i}, 
-						new int[]{j,j-heightQ,j}, n);
+		for (int j = 0; j < getHeight(); j++) {
+			for (int i = 0; i < getWidth(); i++) {
+				if (j % 2 == 0) {
+					g2.fillPolygon(	new int[] { i*widthQ, (i*widthQ)+(widthQ/2),(widthQ*i)+widthQ },
+									new int[] { heightQ+(heightQ*j), j*heightQ, heightQ+(heightQ*j) }, n);
+				}else{
+					g2.fillPolygon(	new int[] { (i*widthQ)+widthQ/2, ((i*widthQ)+(widthQ/2))+widthQ/2,((widthQ*i)+widthQ)+widthQ/2 },
+									new int[] { heightQ+(heightQ*j), j*heightQ, heightQ+(heightQ*j) }, n);
+				}
+				
+//				g2.fillPolygon(
+//						new int[] { 0 + i, (widthQ / 2) + i, widthQ + i },
+//						new int[] { heightQ, 0, heightQ }, n);
+//				g2.fillPolygon(new int[] { widthQ + i,
+//						(widthQ + (widthQ / 2)) + i, (widthQ * 2) + i },
+//						new int[] { heightQ + j, j, heightQ + j }, n);
+//				g2.fillPolygon(new int[] { i, (widthQ / 2) + i, (widthQ) + i },
+//						new int[] { j, j - heightQ, j }, n);
 			}
 			cont++;
 		}
