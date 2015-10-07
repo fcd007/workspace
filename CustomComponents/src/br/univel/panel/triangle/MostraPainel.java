@@ -1,4 +1,4 @@
-package br.univel.panel;
+package br.univel.panel.triangle;
 
 import java.awt.Color;
 import java.awt.Container;
