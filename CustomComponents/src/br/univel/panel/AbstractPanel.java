@@ -1,4 +1,4 @@
-package br.univel.panel.triangle;
+package br.univel.panel;
 
 import java.awt.Color;
 import java.awt.Toolkit;
@@ -8,9 +8,9 @@ import javax.swing.JPanel;
 public abstract class AbstractPanel extends JPanel{
 	private int r, g, b, cont;
 	private boolean swap=true;
-	private int color = -1;
+	protected int color = -1;
 	private int before;
-	private final int size;
+	protected final int size;
 	private boolean fade;
 
 	public AbstractPanel(int separation, boolean fade) {
@@ -21,8 +21,12 @@ public abstract class AbstractPanel extends JPanel{
 	}
 	
 	
-	private Color getRandomColor(int c) {
-		switch (c) {
+	protected Color getRandomColor() {
+		switch (color) {
+		case -1:{
+			r =g =b =255;
+			break;
+		}
 
 		case 0: {
 			r = b = 0;
