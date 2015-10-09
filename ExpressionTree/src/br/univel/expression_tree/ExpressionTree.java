@@ -14,6 +14,10 @@ public class ExpressionTree {
 			}
 		}
 	}
+	
+	public void expect(char token){
+		
+	}
 
 	private boolean isSimbol(char c) {
 		if (c == '+' || c == '-' || c == '*' || c == '/')
