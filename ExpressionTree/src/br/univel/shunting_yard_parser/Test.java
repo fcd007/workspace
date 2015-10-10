@@ -1,4 +1,4 @@
-package br.univel.test;
+package br.univel.shunting_yard_parser;
 
 import br.univel.expression_tree.ASTNode;
 import br.univel.expression_tree.Evaluator;
