@@ -1,7 +1,7 @@
 package br.univel.expression_tree;
 
 public class Token {
-	TokenType type = TokenType.Error;
+	TokenType type = TokenType.ERROR;
 	private double value=0;
 	private char symbol=0;
 	
