@@ -18,12 +18,13 @@ public class ClienteDaoH2Impl implements ClienteDao {
 
 	private Connection getConnection() throws SQLException {
 
-		// synchronized (con) {
 		if (con == null) {
 			con = DriverManager.getConnection(url, user, pass);
 		}
-		return con;
-		// }
+		synchronized (con) {
+			return con;
+
+		}
 	}
 
 	@Override
@@ -52,10 +53,10 @@ public class ClienteDaoH2Impl implements ClienteDao {
 		ps.setInt(1, c.getId());
 		ps.setString(2, c.getNome());
 		ps.setInt(3, id);
-	
-		int res=ps.executeUpdate();
+
+		int res = ps.executeUpdate();
 		ps.close();
-	System.out.println(res+"Registros alterados");
+		System.out.println(res + "Registros alterados");
 
 	}
 
@@ -64,10 +65,10 @@ public class ClienteDaoH2Impl implements ClienteDao {
 		String sql = "DELETE FROM teste WHERE ID = ?";
 		PreparedStatement ps = getConnection().prepareStatement(sql);
 		ps.setInt(1, c.getId());
-		
-		int res=ps.executeUpdate();
+
+		int res = ps.executeUpdate();
 		ps.close();
-		System.out.println(res+"Registros alterados");
+		System.out.println(res + "Registros alterados");
 
 	}
 
