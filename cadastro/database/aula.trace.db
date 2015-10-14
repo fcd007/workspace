@@ -1,0 +1,46 @@
+2015-10-13 20:13:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "TESTE" not found; SQL statement:
+INSERT INTO TESTE VALUES(1, 'Juliano') [42102-190]
+2015-10-13 20:14:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "TESTE" not found; SQL statement:
+INSERT INTO teste VALUES(1, 'Juliano') [42102-190]
+2015-10-13 20:15:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Column count does not match; SQL statement:
+INSERT INTO teste VALUES(1, 'Juliano') [21002-190]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.message.DbException.get(DbException.java:144)
+	at org.h2.command.dml.Insert.prepare(Insert.java:265)
+	at org.h2.command.Parser.prepareCommand(Parser.java:246)
+	at org.h2.engine.Session.prepareLocal(Session.java:460)
+	at org.h2.engine.Session.prepareCommand(Session.java:402)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1188)
+	at org.h2.jdbc.JdbcPreparedStatement.<init>(JdbcPreparedStatement.java:72)
+	at org.h2.jdbc.JdbcConnection.prepareStatement(JdbcConnection.java:276)
+	at br.univel.cadastro.model.ClienteDaoH2Impl.create(ClienteDaoH2Impl.java:28)
+	at cadastro.Test.main(Test.java:9)
+2015-10-13 20:19:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Invalid value "1" for parameter "parameterIndex" [90008-190]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.getInvalidValueException(DbException.java:228)
+	at org.h2.jdbc.JdbcPreparedStatement.setParameter(JdbcPreparedStatement.java:1382)
+	at org.h2.jdbc.JdbcPreparedStatement.setInt(JdbcPreparedStatement.java:332)
+	at br.univel.cadastro.model.ClienteDaoH2Impl.create(ClienteDaoH2Impl.java:29)
+	at cadastro.Test.main(Test.java:12)
+2015-10-13 20:20:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "TESTE" already exists; SQL statement:
+CREATE TABLE TESTE(id int PRIMARY KEY, nome VARCHAR(255)) [42101-190]
+2015-10-13 20:29:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PESSOA" not found; SQL statement:
+SELECT * FROM PESSOA WHERE id = 1 [42102-190]
+2015-10-13 20:30:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PESSOA" not found; SQL statement:
+SELECT * FROM PESSOA WHERE id = 1 [42102-190]
+2015-10-13 20:39:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PESSOA" not found; SQL statement:
+DELETE FROM PESSOA WHERE ID = ? [42102-190]
+2015-10-13 20:41:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "PESSOA" not found; SQL statement:
+UPDATE PESSOA SET ID = ?, NOME = ? WHERE ID = ? [42102-190]
