@@ -105,4 +105,14 @@ public class ClienteDaoH2Impl implements ClienteDao {
 		return cliente;
 	}
 
+	public int getMax() throws SQLException {
+		int id=-1;
+		Statement st = getConnection().createStatement();
+		ResultSet result = st.executeQuery("SELECT MAX(id) FROM teste");
+		while (result.next()) {
+			id = result.getInt(1);
+		}
+		return id;
+	}
+
 }
