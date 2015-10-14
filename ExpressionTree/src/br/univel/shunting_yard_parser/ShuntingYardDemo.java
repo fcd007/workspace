@@ -107,7 +107,8 @@ public class ShuntingYardDemo {
         operators.add(new BaseOperator('-', false, 2));
 
         final ShuntingYardParser parser = new ShuntingYardParser(operators);
-        final String input = "1+2+3";
+        //implementar codigo para receber numeror maior que 9
+        final String input = "15+2+3";
 
         final String rpn = parser.convertInfixNotationToRPN(input);
         System.out.println("RPN expression: " + rpn);

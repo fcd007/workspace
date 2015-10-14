@@ -68,6 +68,7 @@ public class Parser {
 		factorNode = factor();
 		term1Node = term1();
 
+//		return createNode(ASTNodeType.OPERATORMUL, factorNode, term1Node);
 		return createNode(ASTNodeType.OPERATORMUL, factorNode, term1Node);
 
 	}
