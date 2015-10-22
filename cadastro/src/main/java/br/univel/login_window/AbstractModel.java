@@ -1,17 +1,27 @@
 package br.univel.login_window;
 
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+
 import javax.swing.JButton;
+
 import java.awt.GridBagConstraints;
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 
 public abstract class AbstractModel extends JPanel {
+	private JButton btnClose;
 	protected abstract void configureInnerPanel();
+	public void setCloseAction(ActionListener action){
+		btnClose.addActionListener(action);
+	}
 
 	/**
 	 * Create the panel.
@@ -37,7 +47,7 @@ public abstract class AbstractModel extends JPanel {
 		gbc_lblLabel.gridy = 0;
 		panel.add(lblLabel, gbc_lblLabel);
 		
-		JButton btnClose = new JButton("Close");
+		btnClose = new JButton("Close");
 		GridBagConstraints gbc_btnClose = new GridBagConstraints();
 		gbc_btnClose.anchor = GridBagConstraints.EAST;
 		gbc_btnClose.gridx = 1;

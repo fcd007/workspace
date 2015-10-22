@@ -50,7 +50,21 @@ public class PrincipalWindow extends JFrame {
 		JMenuItem mntmCliente = new JMenuItem("Cliente");
 		mntmCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				tabbedPane.addTab("Cliente", new TelaCadastroCliente());
+				openWindow();
+			}
+
+			private void openWindow() {
+				TelaCadastroCliente telaCadastroCliente = new TelaCadastroCliente();
+				ActionListener action = new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						tabbedPane.remove(telaCadastroCliente);
+						
+					}
+				};
+//				telaCadastroCliente.setCloseAction(action);
+				telaCadastroCliente.setCloseAction(e -> tabbedPane.remove(telaCadastroCliente));
+				tabbedPane.addTab("Cliente", telaCadastroCliente);
 			}
 		});
 		mnCadastro.add(mntmCliente);
