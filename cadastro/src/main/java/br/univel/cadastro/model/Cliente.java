@@ -2,7 +2,7 @@ package br.univel.cadastro.model;
 
 public class Cliente {
 	private int id;
-	private String nome, endereco, relefone, cidade;
+	private String nome, endereco, telefone, cidade;
 	private Uf uf;
 	public int getId() {
 		return id;
@@ -22,11 +22,11 @@ public class Cliente {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public String getRelefone() {
-		return relefone;
+	public String getTelefone() {
+		return telefone;
 	}
-	public void setRelefone(String relefone) {
-		this.relefone = relefone;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 	public String getCidade() {
 		return cidade;
