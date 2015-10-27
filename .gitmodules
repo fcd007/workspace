@@ -3,4 +3,4 @@
 	url = C:\\Users\\jmgrams\\Documents\\workspace\\LocadoraOO
 [submodule "LocadoraOO"]
 	path = LocadoraOO
-	url = ../workspace/LocadoraOO
+	url = https://github.com/julianograms/LocadoraOO
