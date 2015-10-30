@@ -12,11 +12,11 @@ import java.util.List;
 public class ClienteDaoH2Impl implements ClienteDao {
 
 	private static Connection con;
-	String url = "jdbc:h2:.\\database\\aula";
-	String user = "admin";
-	String pass = "admin";
+	String url = "jdbc:postgresql://localhost:5432/univel";
+	String user = "postgres";
+	String pass = "univel";
 
-	private Connection getConnection() throws SQLException {
+	public Connection getConnection() throws SQLException {
 
 		if (con == null) {
 			con = DriverManager.getConnection(url, user, pass);
@@ -29,12 +29,14 @@ public class ClienteDaoH2Impl implements ClienteDao {
 
 	@Override
 	public void create(Cliente c) {
-		String sql = "INSERT INTO teste VALUES(?, ?)";
+		String sql = "INSERT INTO cliente VALUES(?, ?,?,?)";
 		// String sql =
 		// "CREATE TABLE TESTE(id int PRIMARY KEY, nome VARCHAR(255))";
 		try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
-			ps.setInt(1, c.getId());
-			ps.setString(2, c.getNome());
+			ps.setInt(1, 1000);
+			ps.setInt(2, 1);
+			ps.setString(3, "Juliano");
+			ps.setString(4, "Rua");
 
 			int res = ps.executeUpdate();
 			ps.close();
