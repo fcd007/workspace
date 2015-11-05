@@ -1,6 +1,9 @@
 package br.univel.aulaTree.professor;
 
+import java.math.BigInteger;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 public class ControlTree {
 
@@ -10,29 +13,31 @@ public class ControlTree {
 
 		int opcao;
 
-		Scanner entradaUsuario = new Scanner(System.in);
-
-		System.out.println("\nMENU DE OPÇÕES\n");
-		System.out.println("1 - Inserir nó");
-		System.out.println("2 - Percorrer Pré-ordem");
-		System.out.println("5 - Exibir Arvore");
-		System.out.println("6 - Limpar Arvore");
-		System.out.println("9 - Sair");
-		System.out.print("Digite sua opção:");
-		opcao = entradaUsuario.nextInt();
+		StringBuilder sb = new StringBuilder();
+		sb.append("\nMENU DE OPÇÕES\n");
+		sb.append("1 - Inserir nó\n");
+		sb.append("2 - Percorrer Pré-ordem\n");
+		sb.append("5 - Exibir Arvore\n");
+		sb.append("6 - Limpar Arvore\n");
+		sb.append("9 - Sair\n");
+		sb.append("Digite sua opção:\n");
+		opcao = Integer.parseInt(JOptionPane.showInputDialog(sb.toString()));
 
 		switch (opcao) {
 
-		case 1:
-			Scanner vlr = new Scanner(System.in);
+		case 1: {
+			// Scanner vlr = new Scanner(System.in);
 
-			System.out.println("\nINFORME UM VALOR INTEIRO");
-			opcao = entradaUsuario.nextInt();
-
-			tree.insertNode(opcao);
+			Pessoa pessoa = new Pessoa();
+			pessoa.setCpf(new BigInteger(JOptionPane
+					.showInputDialog("Insira Seu CPF")));
+			pessoa.setNome(JOptionPane.showInputDialog("Insira Seu nome"));
+			System.out.println(pessoa.getCpf().toString());
+			tree.insertNode(pessoa);
 			this.menu();
 
 			break;
+		}
 
 		case 2:
 			System.out.println("\n\n");
