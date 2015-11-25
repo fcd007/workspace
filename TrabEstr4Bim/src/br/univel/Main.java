@@ -9,6 +9,9 @@ public class Main {
 		dijkstras.insertCity(new City("IRATI", 4));
 		dijkstras.insertCity(new City("CURITIBA", 5));
 		dijkstras.attatchCities(1, 2, new Double(50));
-		dijkstras.getShortestPath(1, 3);
+		dijkstras.attatchCities(2, 4, new Double(100));
+		dijkstras.attatchCities(4, 5, new Double(10));
+		dijkstras.attatchCities(1, 5, new Double(150));
+		dijkstras.getShortestPath(1, 2);
 	}
 }

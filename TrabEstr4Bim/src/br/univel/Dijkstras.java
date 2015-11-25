@@ -34,25 +34,21 @@ public class Dijkstras {
 				break;
 			}
 		}
-		System.out.println(getDistance(city1, code2));
+		System.out.println(getDistance(city1, code2, city1.getCode()));
 //		getDistance(city1, code2);
 		return null;
 	}
 
-	private void hasConnection(City city1, Integer key) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	private boolean getDistance(City city1, Integer city2) {
-		if(city1.getCode() == city2){
+	private boolean getDistance(City current, Integer destiny, Integer origin) {
+		if(current.getCode() == destiny){
 			return true;
 		}
-		if(!city1.getAttachments().isEmpty()){
-			for(Integer key : city1.getAttachments().keySet()){
+		if(!current.getAttachments().isEmpty() && origin != current.getCode()){
+			for(Integer key : current.getAttachments().keySet()){
 				City city = cities.get(key);
 				
-				if(getDistance(city, city2))
+				if(getDistance(city, destiny, origin))
 					return true;
 			}
 		}
