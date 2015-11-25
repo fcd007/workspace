@@ -1,26 +1,19 @@
 package br.univel;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-public class Graph {
+class Graph {
 	
 	private final Map<String, List<Vertex>> vertices;
-	private Map<String, Integer> result= new LinkedHashMap<>();
-	
 	
 	public Graph() {
 		this.vertices = new LinkedHashMap<String, List<Vertex>>(); 
 	}
 	
-	public Map<String, List<Vertex>> getVertices() {
-		return vertices;
-	}
-
 	public void addVertex(String character, List<Vertex> vertex) {
 		this.vertices.put(character, vertex);
 	}
@@ -30,26 +23,26 @@ public class Graph {
 		PriorityQueue<Vertex> nodes = new PriorityQueue<Vertex>();
 		Map<String, Vertex> previous = new LinkedHashMap<String, Vertex>();
 		List<String> path = new LinkedList<String>();
+		
 		for(String vertex : vertices.keySet()) {
 			if (vertex.equals(start)) {
 				distances.put(vertex, 0);
-				nodes.add(new Vertex(vertex, 0));
+				nodes.add(new Vertex(vertex+"", 0));
 			} else {
 				distances.put(vertex, Integer.MAX_VALUE);
-				nodes.add(new Vertex(vertex, Integer.MAX_VALUE));
+				nodes.add(new Vertex(vertex+"", Integer.MAX_VALUE));
 			}
 			previous.put(vertex, null);
 		}
 		
 		while (!nodes.isEmpty()) {
 			Vertex smallest = nodes.poll();
-			if (smallest.getId() == finish) {
+			if (smallest.getId().equals(finish)) {
 				path = new LinkedList<String>();
 				while (previous.get(smallest.getId()) != null) {
-					path.add(smallest.getId()+" -- "+smallest.getDistance());
+					path.add(smallest.getId());
 					smallest = previous.get(smallest.getId());
 				}
-//				result;
 				return path;
 			}
 
@@ -73,15 +66,8 @@ public class Graph {
 				}
 			}
 		}
-			
+		
 		return new ArrayList<String>(distances.keySet());
 	}
-
-	public Map<String, Integer> getResult() {
-		return result;
-	}
-
-	public void setResult(Map<String, Integer> result) {
-		this.result = result;
-	}
+	
 }
