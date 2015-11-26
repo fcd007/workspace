@@ -47,14 +47,14 @@ public class Dijkstras {
 		Route currentRoute = new Route();
 		currentRoute.setCity(origin);
 		currentRoute.setOrigin(currentRoute);
-		getRoutes(origin, destiny, currentRoute);
+		getRoutes(destiny, currentRoute);
 		Route[] shortestPath = null;
 		Double minPath = new Double(0);
-		for (int i=0;i<this.matchedRoutes.size();i++) {
+		for (int i = 0; i < this.matchedRoutes.size(); i++) {
 			Route[] route = this.matchedRoutes.get(i);
-			if(i==0){
-				minPath=getDistance(route);
-				shortestPath=route;
+			if (i == 0) {
+				minPath = getDistance(route);
+				shortestPath = route;
 			}
 			Double distance = getDistance(route);
 			if (distance.compareTo(minPath) < 0) {
@@ -64,13 +64,17 @@ public class Dijkstras {
 		}
 		return shortestPath;
 	}
-	
-	public String getStringPath(Route[] route){
+
+	public String getStringPath(Route[] route) {
 		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<route.length;i++){
-			sb.append(route[i].getCity().getName()+" --> ");
+		if (route != null) {
+			for (int i = 0; i < route.length; i++) {
+				sb.append(route[i].getCity().getName() + " --> ");
+			}
+			sb.append(getDistance(route).toString());
+		}else{
+			sb.append("Nenhuma rota encontrada");
 		}
-		sb.append(getDistance(route).toString());
 		return sb.toString();
 	}
 
@@ -82,8 +86,8 @@ public class Dijkstras {
 		return distance;
 	}
 
-	private void getRoutes(City currentCity, City destiny, Route currentRoute) {
-		if (currentCity.getCode() == destiny.getCode()) {
+	private void getRoutes(City destiny, Route currentRoute) {
+		if (currentRoute.getCity().getCode() == destiny.getCode()) {
 			this.matchedRoutes.add(currentRoute.getCompleteRoute());
 			return;
 		}
@@ -93,7 +97,7 @@ public class Dijkstras {
 				Route route = new Route();
 				route.setCity(city);
 				currentRoute.setNext(route);
-				getRoutes(city, destiny, currentRoute.getNext());
+				getRoutes(destiny, currentRoute.getNext());
 				currentRoute.setNext(null);
 			}
 
