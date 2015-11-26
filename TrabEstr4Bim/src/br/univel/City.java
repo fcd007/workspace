@@ -6,10 +6,10 @@ import java.util.Map;
 public class City {
 	private String name;
 	private Integer code;
-	private Map<Integer, Double> attachments;
+	private Map<Integer, Double> links;
 	
 	public City(String name, Integer code) {	
-		attachments = new LinkedHashMap<Integer, Double>();
+		links = new LinkedHashMap<Integer, Double>();
 		this.name=name;
 		this.code=code;
 	}
@@ -19,8 +19,8 @@ public class City {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Map<Integer, Double> getAttachments() {
-		return attachments;
+	public Map<Integer, Double> getLinks() {
+		return links;
 	}
 	public Integer getCode() {
 		return code;
@@ -30,7 +30,7 @@ public class City {
 	} 
 	
 	public void setRoute(City city, Double distance){
-		attachments.put(city.getCode(), distance);
+		links.put(city.getCode(), distance);
 	}
 	
 }

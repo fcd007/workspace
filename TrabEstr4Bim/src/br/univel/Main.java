@@ -12,6 +12,6 @@ public class Main {
 		dijkstras.attatchCities(2, 4, new Double(100));
 		dijkstras.attatchCities(4, 5, new Double(10));
 		dijkstras.attatchCities(1, 5, new Double(150));
-		dijkstras.getShortestPath(1, 2);
+		System.out.println(dijkstras.getStringPath(dijkstras.getShortestPath(1, 5)));
 	}
 }

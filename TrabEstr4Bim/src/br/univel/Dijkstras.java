@@ -6,58 +6,106 @@ import java.util.List;
 import java.util.Map;
 
 public class Dijkstras {
-	
+
 	private Map<Integer, City> cities;
-	
+	private List<Route[]> matchedRoutes;
+
 	public Dijkstras() {
 		cities = new LinkedHashMap<Integer, City>();
+		matchedRoutes = new LinkedList<>();
 	}
-	
-	public void insertCity(City city){
-		cities.put(city.getCode(),city);
+
+	public void insertCity(City city) {
+		cities.put(city.getCode(), city);
 	}
-	
-	public boolean attatchCities(int code1, int code2, Double distance){
-		City city1  = cities.get(code1);
+
+	public boolean attatchCities(int code1, int code2, Double distance) {
+		City city1 = cities.get(code1);
 		City city2 = cities.get(code2);
 		city1.setRoute(city2, distance);
 		city2.setRoute(city1, distance);
 		return true;
-		
+
+	}
+
+	public Route[] getShortestPath(Integer code1, Integer code2) {
+		City origin = null;
+		City destiny = null;
+		for (Integer key : cities.keySet()) {
+			City current = cities.get(key);
+			if (current.getCode() == code1) {
+				origin = current;
+				continue;
+			}
+			if (current.getCode() == code2) {
+				destiny = current;
+				continue;
+			}
+
+		}
+		List<Route> routes = new LinkedList<>();
+		Route currentRoute = new Route();
+		currentRoute.setCity(origin);
+		currentRoute.setOrigin(currentRoute);
+		getRoutes(origin, destiny, currentRoute);
+		Route[] shortestPath = null;
+		Double minPath = new Double(0);
+		for (int i=0;i<this.matchedRoutes.size();i++) {
+			Route[] route = this.matchedRoutes.get(i);
+			if(i==0){
+				minPath=getDistance(route);
+				shortestPath=route;
+			}
+			Double distance = getDistance(route);
+			if (distance.compareTo(minPath) < 0) {
+				shortestPath = route;
+				minPath = distance;
+			}
+		}
+		return shortestPath;
 	}
 	
-	public List<City> getShortestPath(Integer code1, Integer code2){
-		City city1=null;
-		for (Integer key : cities.keySet()) {
-			city1= cities.get(key);
-			if(city1.getCode() == code1){
-				break;
-			}
+	public String getStringPath(Route[] route){
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<route.length;i++){
+			sb.append(route[i].getCity().getName()+" --> ");
 		}
-		System.out.println(getDistance(city1, code2, city1.getCode()));
-//		getDistance(city1, code2);
-		return null;
+		sb.append(getDistance(route).toString());
+		return sb.toString();
 	}
 
+	private Double getDistance(Route[] route) {
+		Double distance = new Double(0);
+		for (int i = 0; i < route.length - 1; i++) {
+			distance = Double.sum(distance, route[i].getCity().getLinks().get(route[i + 1].getCity().getCode()));
+		}
+		return distance;
+	}
 
-	private boolean getDistance(City current, Integer destiny, Integer origin) {
-		if(current.getCode() == destiny){
-			return true;
+	private void getRoutes(City currentCity, City destiny, Route currentRoute) {
+		if (currentCity.getCode() == destiny.getCode()) {
+			this.matchedRoutes.add(currentRoute.getCompleteRoute());
+			return;
 		}
-		if(!current.getAttachments().isEmpty() && origin != current.getCode()){
-			for(Integer key : current.getAttachments().keySet()){
-				City city = cities.get(key);
-				
-				if(getDistance(city, destiny, origin))
-					return true;
+		for (Integer key : currentRoute.getCity().getLinks().keySet()) {
+			City city = cities.get(key);
+			if (!isInRoute(city, currentRoute.getOrigin())) {
+				Route route = new Route();
+				route.setCity(city);
+				currentRoute.setNext(route);
+				getRoutes(city, destiny, currentRoute.getNext());
+				currentRoute.setNext(null);
 			}
+
 		}
-			
+	}
+
+	private boolean isInRoute(City city, Route currentRoute) {
+		while (currentRoute != null) {
+			if (currentRoute.getCity().getCode() == city.getCode())
+				return true;
+			currentRoute = currentRoute.getNext();
+		}
 		return false;
 	}
-
-//	class Node {
-//		private City city;
-//		List<Node> attachments;
-//	}
 }
