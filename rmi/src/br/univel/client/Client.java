@@ -9,35 +9,21 @@ import br.univel.common.ServicoRMI;
 
 public class Client {
 
-	public static void main(String[] args) {
-		Client client = new Client();
-		for (int i = 2; i < 255; i++) { 
-			client.sendRequest(i);
-		}
-	}
+    public static void main(String[] args) {
+        Registry registry;
+        try {
+            registry = LocateRegistry.getRegistry("192.168.104.209",
+                    1818);
+            ServicoRMI servico = (ServicoRMI) registry
+                    .lookup(ServicoRMI.NOME);
+//            String retorno = servico.greet("HELLO");
+//            System.out.println(retorno);
 
-	public void sendRequest(int i) {
-		new Runnable() {
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-			@Override
-			public void run() {
-				Registry registry;
-				try {
-					System.out.println("Tentativa "+i);
-					registry = LocateRegistry.getRegistry("192.168.103." + i,
-							1818);
-					ServicoRMI servico = (ServicoRMI) registry
-							.lookup(ServicoRMI.NOME);
-					String retorno = servico.greet("HELLO");
-					System.out.println(retorno);
-
-				} catch (RemoteException e) {
-//					e.printStackTrace();
-				} catch (NotBoundException e) {
-//					e.printStackTrace();
-				}
-			}
-		}.run();;
-
-	}
 }
