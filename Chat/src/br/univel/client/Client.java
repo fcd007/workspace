@@ -1,7 +1,9 @@
 package br.univel.client;
 
 import br.univel.common.ChatClient;
-import br.univel.server.Server;
+import br.univel.common.ChatServer;
+import br.univel.common.Response;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -9,26 +11,44 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class Client implements ChatClient {
 
-    public static void main(String[] args) {
+    private String nome;
+    private int port;
+
+    private ChatServer servico;
+
+    public Client(String nome, int port) {
+        this.nome = nome;
+        this.port = port;
+        this.init();
+        this.connectToServer();
+    }
+
+    public void init() {
 
         System.out.println("Iniciando o cliente...");
 
-        Server s = new Server();
         ChatClient servico;
         try {
-            servico = (ChatClient) UnicastRemoteObject.exportObject(s, 0);
-            Registry registry = LocateRegistry.createRegistry(1818);
-            registry.rebind(ChatClient.NOME, servico);
+            servico = (ChatClient) UnicastRemoteObject.exportObject(Client.this, 0);
+            Registry registry = LocateRegistry.createRegistry(port);
+            registry.rebind(ChatClient.SERVICO, servico);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
 
+    private void connectToServer() {
         try {
-            Thread.sleep(Long.MAX_VALUE);
-        } catch (InterruptedException e) {
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1",
+                    1818);
+            servico = (ChatServer) registry
+                    .lookup(ChatServer.SERVICO);
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -42,15 +62,40 @@ public class Client implements ChatClient {
     }
 
     @Override
-    public void notificarEntrada(String nome) throws RemoteException {
-        System.out.println(nome + "\n");
+    public void notificarEntrada(String msg) throws RemoteException {
+        System.out.println(msg + "\n");
     }
 
     @Override
-    public void notificarSaida(String nome) throws RemoteException {
-        System.out.println(nome + "\n");
+    public void notificarSaida(String msg) throws RemoteException {
+        System.out.println(msg + "\n");
     }
-    
-    //public Client
+
+    public ChatServer getServico() {
+        return servico;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getNome() {
+        return nome;
+
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public boolean checkConnection() throws RemoteException {
+
+        return true;
+    }
 
 }

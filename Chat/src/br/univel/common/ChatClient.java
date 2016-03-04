@@ -14,7 +14,8 @@ import java.rmi.RemoteException;
  */
 public interface ChatClient extends Remote {
     
-    final String NOME = "ChatClient";
+    final String SERVICO = "ChatClient";
+    
 
     public void receberMsgPrivada(String from, String msg) throws RemoteException;
 
@@ -23,4 +24,6 @@ public interface ChatClient extends Remote {
     public void notificarEntrada(String nome) throws RemoteException;
 
     public void notificarSaida(String nome) throws RemoteException;
+    
+    public boolean checkConnection() throws RemoteException;
 }

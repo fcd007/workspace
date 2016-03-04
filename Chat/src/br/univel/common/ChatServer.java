@@ -14,13 +14,14 @@ import java.rmi.RemoteException;
  */
 public interface ChatServer extends Remote {
 
-    final public String NOME = "ChatServer";
+    final public String SERVICO = "ChatServer";
 
-    public void registrar(String nome, ChatClient client) throws RemoteException;
+    public Response registrar(String nome, ChatClient client) throws RemoteException;
 
     public void logoff(String nome) throws RemoteException;
 
-    public void enviarMsgPrivada(String from, String to, String msg) throws RemoteException;
+    public Response enviarMsgPrivada(String from, String to, String msg) throws RemoteException;
 
-    public void enviarMsgPublica(String from, String msg) throws RemoteException;
+    public Response enviarMsgPublica(String from, String msg) throws RemoteException;
+    
 }
