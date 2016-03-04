@@ -25,5 +25,10 @@ public interface ChatClient extends Remote {
 
     public void notificarSaida(String nome) throws RemoteException;
     
+    /**
+     * Verifica se a conexao esta ativa.
+     * @return
+     * @throws RemoteException 
+     */
     public boolean checkConnection() throws RemoteException;
 }
