@@ -53,22 +53,22 @@ public class Client implements ChatClient {
 
     @Override
     public void receberMsgPrivada(String from, String msg) throws RemoteException {
-        System.out.println("Mensagem privada de " + from + "\n" + msg + "\n");
+        System.out.println("\n Mensagem privada de " + from + "\n" + msg + "\n"+getPrefix());
     }
 
     @Override
     public void receberMsgPublica(String from, String msg) throws RemoteException {
-        System.out.println("Mensagem publica de " + from + "\n" + msg + "\n");
+        System.out.println("\n[" + from + "]: " + msg + "\n"+getPrefix());
     }
 
     @Override
     public void notificarEntrada(String msg) throws RemoteException {
-        System.out.println(msg + "\n");
+        System.out.println("\n"+msg + "\n"+getPrefix());
     }
 
     @Override
     public void notificarSaida(String msg) throws RemoteException {
-        System.out.println(msg + "\n");
+        System.out.println("\n"+msg + "\n"+getPrefix());
     }
 
     public ChatServer getServico() {
@@ -94,8 +94,11 @@ public class Client implements ChatClient {
 
     @Override
     public boolean checkConnection() throws RemoteException {
-
         return true;
+    }
+    
+    public String getPrefix(){
+        return "["+this.nome+"]: ";
     }
 
 }

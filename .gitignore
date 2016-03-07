@@ -57,3 +57,4 @@ hs_err_pid*
 /Chat/build/
 /contacts/node_modules/
 /contacts/bower_components/
+/Chat/dist/
