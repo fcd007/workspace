@@ -45,6 +45,11 @@ public class Server implements ChatServer {
                 } catch (RemoteException ex) {
                     removeList.add(key);
                     System.out.println(key + " timed out.");
+//                    try {
+//                        s.enviarMsgPublica("servidor", key +"timed out.");
+//                    } catch (RemoteException ex1) {
+//                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
+//                    }
                 }
             }
             for (String element : removeList) {
@@ -88,7 +93,7 @@ public class Server implements ChatServer {
     public Response enviarMsgPrivada(String from, String to, String msg) throws RemoteException {
 
         System.out.println(from + " esta enviando uma mensagem privada para " + to);
-        if (usuarios.containsKey(to)) {
+        if (usuarios.containsKey(to) && !from.equals(to)) {
             ChatClient chatClient = usuarios.get(to);
             try {
                 chatClient.checkConnection();

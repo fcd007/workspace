@@ -49,6 +49,7 @@ public class Principal {
                         try {
                             client.getServico().enviarMsgPrivada(client.getNome(), privateUser, input.substring(i + 1));
                         } catch (RemoteException ex) {
+                            System.out.println("Mensagem não enviada");
                             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
@@ -63,10 +64,11 @@ public class Principal {
                 try {
                     client.getServico().enviarMsgPublica(client.getNome(), input);
                 } catch (RemoteException ex) {
-
+                    System.out.println("Mensagem não enviada");
                 }
             }
-        };
+        }
+        
         try {
             client.getServico().logoff(client.getNome());
         } catch (RemoteException ex) {

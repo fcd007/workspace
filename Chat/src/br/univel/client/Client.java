@@ -2,7 +2,6 @@ package br.univel.client;
 
 import br.univel.common.ChatClient;
 import br.univel.common.ChatServer;
-import br.univel.common.Response;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -23,7 +22,7 @@ public class Client implements ChatClient {
         this.connectToServer();
     }
 
-    public void init() {
+    public final void init() {
 
         System.out.println("Iniciando o cliente...");
 
