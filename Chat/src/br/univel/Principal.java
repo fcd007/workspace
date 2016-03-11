@@ -5,9 +5,7 @@
  */
 package br.univel;
 
-import static br.univel.Test.scanner;
 import br.univel.client.Client;
-import br.univel.common.ChatClient;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -25,25 +23,55 @@ public class Principal {
 
         System.out.println("Insira o Nome de usuário");
         String user = scanner.nextLine();
-        
+
         System.out.println("Insira a porta");
         int port = Integer.parseInt(scanner.nextLine());
         Client client = new Client(user, port);
-        
+
         try {
             client.getServico().registrar(user, client);
         } catch (RemoteException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            return;
         }
         String input = "";
-        do{
+        while (!input.equals("exit")) {
+            String privateUser = "";
+            boolean hasPrivate = false;
+
             System.out.println(client.getPrefix());
             input = scanner.nextLine();
-            try {
-                client.getServico().enviarMsgPublica(client.getNome(), input);
-            } catch (RemoteException ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+
+            for (int i = 0; i < input.length(); i++) {
+                char letter = input.charAt(i);
+                if (letter == '[' || hasPrivate) {
+                    if (letter == ']') {
+                        try {
+                            client.getServico().enviarMsgPrivada(client.getNome(), privateUser, input.substring(i + 1));
+                        } catch (RemoteException ex) {
+                            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                    }
+                    if (hasPrivate) {
+                        privateUser += letter;
+                    }
+                    hasPrivate = true;
+                }
             }
-        }while(input != "exit");
+            if (!hasPrivate) {
+                try {
+                    client.getServico().enviarMsgPublica(client.getNome(), input);
+                } catch (RemoteException ex) {
+
+                }
+            }
+        };
+        try {
+            client.getServico().logoff(client.getNome());
+        } catch (RemoteException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.exit(client.getPort());
     }
 }
