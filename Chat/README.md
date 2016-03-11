@@ -47,3 +47,7 @@ Projeto RMI
 > Para enviar uma mensagem privada, você deve digiar o nome do usuário desejado entre colchetes `[nomedousuario]`, e 
 > em seguida digitar a mensagem.
 > Para fazer logoff basta escrever `exit`.
+
+----
+> O Programa funciona apenas localmente, porém é só mudar o ip caso deseje utilizar o servidor em outra máquina.
+> É possível executar quantos clientes você quiser, basta utilizar portas diferentes.
