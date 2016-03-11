@@ -51,3 +51,4 @@ Projeto RMI
 ----
 > O Programa funciona apenas localmente, porém é só mudar o ip caso deseje utilizar o servidor em outra máquina.
 > É possível executar quantos clientes você quiser, basta utilizar portas diferentes.
+> 3a1003 para fernandod@univel.br
