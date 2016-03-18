@@ -58,3 +58,7 @@ hs_err_pid*
 /contacts/node_modules/
 /contacts/bower_components/
 /Chat/dist/
+/TarefaRMI/nbproject/private/
+/TarefaRMI/build/
+/TarefaRMI/dist/
+/EmailRmi/nbproject/private/
