@@ -4,21 +4,24 @@
 	<title> Contacts</title>
 	<base href="/">
 	<link rel="stylesheet" type="text/css" href="src/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.min.css">
 </head> 
 <body>
 	<div class='container'>
 		<h1 class='page-header'>
-			Contacts:  {{message}}
+			Contacts: 
 		</h1>
 	</div>
 	<div class='row'>
-		<div class'=col-sm-12' ng-view=' '></div>
+		<div class='col-sm-12' ng-view></div>
 	</div>
 	<script src="lib/jquery/jquery.min.js"></script>
 	<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="lib/angular/angular.min.js"></script>
 	<script src="lib/angular-route/angular-route.min.js"></script>
+	<script src="lib/angular-resource/angular-resource.min.js"></script>
 	<script src="src/app.js"></script>
-	<script src="src/controller.js"></script>
+	<script src="src/controllers.js"></script>
+	<script src="src/factories.js"></script>
 </body>
 </html>
