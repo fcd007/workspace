@@ -2,7 +2,6 @@ package br.univel.client;
 
 import br.univel.common.ChatClient;
 import br.univel.common.ChatServer;
-import br.univel.common.Response;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -23,7 +22,7 @@ public class Client implements ChatClient {
         this.connectToServer();
     }
 
-    public void init() {
+    public final void init() {
 
         System.out.println("Iniciando o cliente...");
 
@@ -53,22 +52,22 @@ public class Client implements ChatClient {
 
     @Override
     public void receberMsgPrivada(String from, String msg) throws RemoteException {
-        System.out.println("Mensagem privada de " + from + "\n" + msg + "\n");
+        System.out.println("\n Mensagem privada de " + from + "\n" + msg + "\n"+getPrefix());
     }
 
     @Override
     public void receberMsgPublica(String from, String msg) throws RemoteException {
-        System.out.println("Mensagem publica de " + from + "\n" + msg + "\n");
+        System.out.println("\n[" + from + "]: " + msg + "\n"+getPrefix());
     }
 
     @Override
     public void notificarEntrada(String msg) throws RemoteException {
-        System.out.println(msg + "\n");
+        System.out.println("\n"+msg + "\n"+getPrefix());
     }
 
     @Override
     public void notificarSaida(String msg) throws RemoteException {
-        System.out.println(msg + "\n");
+        System.out.println("\n"+msg + "\n"+getPrefix());
     }
 
     public ChatServer getServico() {
@@ -94,8 +93,11 @@ public class Client implements ChatClient {
 
     @Override
     public boolean checkConnection() throws RemoteException {
-
         return true;
+    }
+    
+    public String getPrefix(){
+        return "["+this.nome+"]: ";
     }
 
 }

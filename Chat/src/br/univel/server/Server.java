@@ -1,6 +1,5 @@
 package br.univel.server;
 
-import br.univel.Test;
 import br.univel.common.ChatClient;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,7 +37,7 @@ public class Server implements ChatServer {
         }
         List<String> removeList = new LinkedList<>();
         while (true) {
-            
+
             for (String key : s.usuarios.keySet()) {
                 ChatClient chatClient = s.usuarios.get(key);
                 try {
@@ -47,9 +45,14 @@ public class Server implements ChatServer {
                 } catch (RemoteException ex) {
                     removeList.add(key);
                     System.out.println(key + " timed out.");
+//                    try {
+//                        s.enviarMsgPublica("servidor", key +"timed out.");
+//                    } catch (RemoteException ex1) {
+//                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
+//                    }
                 }
             }
-            for(String element : removeList){
+            for (String element : removeList) {
                 s.usuarios.remove(element);
             }
             removeList.clear();
@@ -82,6 +85,7 @@ public class Server implements ChatServer {
         for (Entry<String, ChatClient> e : usuarios.entrySet()) {
             e.getValue().notificarSaida(nome + " desconectou");
         }
+        System.out.println(nome + " desconectou");
 
     }
 
@@ -89,7 +93,7 @@ public class Server implements ChatServer {
     public Response enviarMsgPrivada(String from, String to, String msg) throws RemoteException {
 
         System.out.println(from + " esta enviando uma mensagem privada para " + to);
-        if (usuarios.containsKey(to)) {
+        if (usuarios.containsKey(to) && !from.equals(to)) {
             ChatClient chatClient = usuarios.get(to);
             try {
                 chatClient.checkConnection();
@@ -106,19 +110,21 @@ public class Server implements ChatServer {
 
     @Override
     public Response enviarMsgPublica(String from, String msg) throws RemoteException {
+        System.out.println(from + " esta enviando uma mensagem publica.");
         for (Entry<String, ChatClient> e : usuarios.entrySet()) {
             if (!e.getKey().equals(from)) {
                 try {
                     e.getValue().checkConnection();
                     e.getValue().receberMsgPublica(from, msg);
-                    return new Response(true, "");
                 } catch (RemoteException error) {
-
+                    error.printStackTrace();
+                    return new Response(false, "");
                 }
 
             }
         }
-        return new Response(false, "");
+        return new Response(true, "");
 
     }
+
 }

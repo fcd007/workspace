@@ -7,6 +7,7 @@ package br.univel;
 
 import br.univel.client.Client;
 import br.univel.common.ChatClient;
+import br.univel.common.Response;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,24 +54,71 @@ public class Test {
                 case "2": {
                     System.out.println("Digite o nome do usuario que voce deseja utilizar: ");
                     String emissor = scanner.nextLine();
+                    Client client = usuarios.get(emissor);
+
+                    if (!checkClient(client)) {
+                        System.out.println("Emissor inexistente");
+                        continue;
+                    }
                     System.out.println("Digite o nome do usuario que voce deseja enviar a mensagem: ");
                     String receptor = scanner.nextLine();
+                    Client clientReceptor = usuarios.get(emissor);
+                    if (!checkClient(clientReceptor)) {
+                        System.out.println("Receptor inexistente");
+                        continue;
+                    }
                     System.out.println("Digite a mensagem: ");
                     String msg = scanner.nextLine();
 
-                    Client client = usuarios.get(emissor);
+                    Response response = null;
                     try {
-                        System.out.println(client.getServico().enviarMsgPrivada(emissor, receptor, msg).getMsg());
+                        response = client.getServico().enviarMsgPrivada(emissor, receptor, msg);
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println(
+                            response != null
+                                    ? response.isSuccess()
+                                            ? response.getMsg()
+                                            : "Mensagem não enviada"
+                                    : "Erro"
+                    );
+
+                    break;
+                }
+                case "3": {
+                    System.out.println("Digite o nome do usuario que voce deseja utilizar: ");
+                    String emissor = scanner.nextLine();
+
+                    Client client = usuarios.get(emissor);
+
+                    if (!checkClient(client)) {
+                        System.out.println("Emissor inexistente");
+                        continue;
+                    }
+
+                    System.out.println("Digite a mensagem: ");
+                    String msg = scanner.nextLine();
+
+                    try {
+                        client.getServico().enviarMsgPublica(emissor, msg);
                     } catch (RemoteException ex) {
                         Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
-                }
-                case "3": {
-                    
+
                 }
                 case "4": {
+                    System.out.println("Digite o nome do usuario que voce deseja utilizar: ");
+                    String emissor = scanner.nextLine();
 
+                    Client client = usuarios.get(emissor);
+
+                    if (!checkClient(client)) {
+                        System.out.println("Usuario inexistente");
+                        continue;
+                    }
+                    System.out.println("Você desconectou.");
                 }
             }
 
@@ -85,6 +133,10 @@ public class Test {
         Client client = new Client(nome, port);
         usuarios.put(nome, client);
         return client;
+    }
+
+    private static boolean checkClient(Client client) {
+        return client != null;
     }
 
 }
