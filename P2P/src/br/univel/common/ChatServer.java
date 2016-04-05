@@ -20,9 +20,7 @@ public interface ChatServer extends Remote {
     public Response registrar(String nome, ChatClient client, File[] files) throws RemoteException;
 
     public void logoff(String nome) throws RemoteException;
-
-    public Response enviarMsgPrivada(String from, String to, String msg) throws RemoteException;
-
-    public Response enviarMsgPublica(String from, String msg) throws RemoteException;
+    
+    public ChatClient download(String fileName, String name) throws RemoteException;
     
 }

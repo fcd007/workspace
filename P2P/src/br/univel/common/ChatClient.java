@@ -17,10 +17,6 @@ public interface ChatClient extends Remote {
     final String SERVICO = "ChatClient";
     
 
-    public void receberMsgPrivada(String from, String msg) throws RemoteException;
-
-    public void receberMsgPublica(String from, String msg) throws RemoteException;
-
     public void notificarEntrada(String nome) throws RemoteException;
 
     public void notificarSaida(String nome) throws RemoteException;
@@ -31,4 +27,10 @@ public interface ChatClient extends Remote {
      * @throws RemoteException 
      */
     public boolean checkConnection() throws RemoteException;
+    
+    public void prepareUpload(String name) throws RemoteException;
+    
+    public byte getByte(String fileName, int index) throws RemoteException;
+    
+    public int getFileLength(String nome) throws RemoteException;
 }

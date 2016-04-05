@@ -6,7 +6,11 @@
 package br.univel;
 
 import br.univel.client.Client;
+import br.univel.common.ChatClient;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -29,55 +33,31 @@ public class Principal {
     int port = Integer.parseInt(scanner.nextLine());
     Client client = new Client(user, port);
 
+    register(client);
+
+//    while (!input.equals("exit")) {
+    String input = scanner.nextLine();
+
+    String fileName = "eclipse-jee-mars-2-win32-x86_64.zip";
+
     try {
-      String workingDir = System.getProperty("user.dir");
-      System.out.println("Current working directory : " + workingDir);
-
-      File folder = new File(workingDir + "/upload");
-
-      if (folder.exists() && folder.isDirectory()) {
-        client.getServico().registrar(user, client, folder.listFiles());
-      }else{
-        System.out.println("O diretório 'upload' não foi encontrado.");
+      ChatClient chatClient = client.getServico().download(fileName, client.getNome());
+      byte[] byteArray = new byte[chatClient.getFileLength(fileName)];
+      for (int i = 0; i < byteArray.length; i++) {
+        byteArray[i] = chatClient.getByte(fileName, i);
+        System.out.println(i);
       }
+      
+      FileOutputStream fos = new FileOutputStream(new File(System.getProperty("user.dir") + "\\download\\"+fileName));
+      fos.write(byteArray);
     } catch (RemoteException ex) {
       Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-      return;
+    } catch (FileNotFoundException ex) {
+      Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IOException ex) {
+      Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
     }
-    String input = "";
-    while (!input.equals("exit")) {
-      String privateUser = "";
-      boolean hasPrivate = false;
-
-      System.out.println(client.getPrefix());
-      input = scanner.nextLine();
-
-      for (int i = 0; i < input.length(); i++) {
-        char letter = input.charAt(i);
-        if (letter == '[' || hasPrivate) {
-          if (letter == ']') {
-            try {
-              client.getServico().enviarMsgPrivada(client.getNome(), privateUser, input.substring(i + 1));
-            } catch (RemoteException ex) {
-              System.out.println("Mensagem não enviada");
-              Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            break;
-          }
-          if (hasPrivate) {
-            privateUser += letter;
-          }
-          hasPrivate = true;
-        }
-      }
-      if (!hasPrivate) {
-        try {
-          client.getServico().enviarMsgPublica(client.getNome(), input);
-        } catch (RemoteException ex) {
-          System.out.println("Mensagem não enviada");
-        }
-      }
-    }
+//    }
 
     try {
       client.getServico().logoff(client.getNome());
@@ -85,5 +65,22 @@ public class Principal {
       Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
     }
     System.exit(client.getPort());
+  }
+
+  public static void register(Client client) {
+
+    try {
+      String workingDir = System.getProperty("user.dir");
+      File folder = new File(workingDir + "\\upload");
+
+      if (folder.exists() && folder.isDirectory()) {
+        client.getServico().registrar(client.getNome(), client, folder.listFiles());
+      } else {
+        System.out.println("O diretório 'upload' não foi encontrado.");
+      }
+    } catch (RemoteException ex) {
+      Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+      return;
+    }
   }
 }
