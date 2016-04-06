@@ -86,8 +86,8 @@ public class Server implements ChatServer {
   }
 
   @Override
-  public ChatClient download(String fileName, String name) throws RemoteException {
-    List<Client> clients = new LinkedList<>();
+  public List<ChatClient> download(String fileName, String name) throws RemoteException {
+    List<ChatClient> clients = new LinkedList<>();
     usuarios
             .keySet()
             .stream()
@@ -95,17 +95,16 @@ public class Server implements ChatServer {
             .forEach((c) -> {
       for (File file : c.getFiles()) {
         if (file.getName().equals(fileName)) {
-          clients.add(c);
+          try {
+            c.getChatClient().prepareUpload(fileName);
+          } catch (RemoteException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+          }
+          clients.add(c.getChatClient());
         }
       }
             });
-    ChatClient chatClient = clients
-            .stream()
-            .findFirst()
-            .get()
-            .getChatClient();
-    chatClient.prepareUpload(fileName);
-    return chatClient;
+    return clients;
   }
 
 }

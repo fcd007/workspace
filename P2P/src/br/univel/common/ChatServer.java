@@ -8,6 +8,7 @@ package br.univel.common;
 import java.io.File;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  *
@@ -21,6 +22,6 @@ public interface ChatServer extends Remote {
 
     public void logoff(String nome) throws RemoteException;
     
-    public ChatClient download(String fileName, String name) throws RemoteException;
+    public List<ChatClient> download(String fileName, String name) throws RemoteException;
     
 }

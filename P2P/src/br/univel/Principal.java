@@ -6,13 +6,19 @@
 package br.univel;
 
 import br.univel.client.Client;
+import br.univel.client.DownloadManager;
 import br.univel.common.ChatClient;
+import com.sun.corba.se.spi.orbutil.threadpool.ThreadPool;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,14 +47,16 @@ public class Principal {
     String fileName = "eclipse-jee-mars-2-win32-x86_64.zip";
 
     try {
-      ChatClient chatClient = client.getServico().download(fileName, client.getNome());
-      byte[] byteArray = new byte[chatClient.getFileLength(fileName)];
-      for (int i = 0; i < byteArray.length; i++) {
-        byteArray[i] = chatClient.getByte(fileName, i);
-        System.out.println(i);
-      }
+      final List<ChatClient> chatClients = client.getServico().download(fileName, client.getNome());
+      final ExecutorService executor = Executors.newFixedThreadPool(chatClients.size());
+      final int byteLength = chatClients.get(0).getFileLength(fileName);
+      final DownloadManager downloadManager = new DownloadManager(byteLength, client, chatClients);
+
+      byte[] byteArray = new byte[byteLength];
+      boolean finished = false;
       
-      FileOutputStream fos = new FileOutputStream(new File(System.getProperty("user.dir") + "\\download\\"+fileName));
+
+      FileOutputStream fos = new FileOutputStream(new File(System.getProperty("user.dir") + "\\download\\" + fileName));
       fos.write(byteArray);
     } catch (RemoteException ex) {
       Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
