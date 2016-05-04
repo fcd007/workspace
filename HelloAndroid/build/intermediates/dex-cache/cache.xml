@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="016be4431d9baa72dacb37644fbacb6d6a70e7ad">
+        <dex dex="/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_ab49558e28b5cdc0061825e35d6d5f7bd114c1d4/classes.dex" />
+    </item>
+    <item
+        jar="/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_5a68ef54bcb23667eaff61e2d529865efc0aa310/classes.dex" />
+    </item>
+    <item
+        jar="/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_4862ae25913fe6af68c214afeb9011ce6335cb72/classes.dex" />
+    </item>
+    <item
+        jar="/home/juliano/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_547eff8f081763967a083180f84a2133a1a7de4f/classes.dex" />
+    </item>
+    <item
+        jar="/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="f3d7aa1831f26004269d2bd8f0841945a0629cc1">
+        <dex dex="/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_13c7f912349caa387bf7e2a41fa3858005804bf0/classes.dex" />
+    </item>
+
+</items>

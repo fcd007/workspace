@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/res/merged/debug/menu/cadastro.xml",
+        "source": "/home/juliano/Documents/github/HelloAndroid/app/src/main/res/menu/cadastro.xml"
+    },
+    {
+        "merged": "/home/juliano/Documents/github/HelloAndroid/app/build/intermediates/res/merged/debug/menu/main.xml",
+        "source": "/home/juliano/Documents/github/HelloAndroid/app/src/main/res/menu/main.xml"
+    }
+]

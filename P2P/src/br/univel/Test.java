@@ -21,122 +21,113 @@ import java.util.logging.Logger;
  */
 public class Test {
 
-    public static Map<String, Client> usuarios = new HashMap<>();
-    public static Scanner scanner = new Scanner(System.in);
+	public static Map<String, Client> usuarios = new HashMap<>();
+	public static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        String input;
+		String input;
 
-        String menu
-                = "1 - Criar Usuario\n"
-                + "2 - Enviar Mensagem Privada\n"
-                + "3 - Enviar Mensagem Publica\n"
-                + "4 - logoff de usuario\n"
-                + "exit\n";
+		String menu = "1 - Criar Usuario\n" + "2 - Enviar Mensagem Privada\n" + "3 - Enviar Mensagem Publica\n"
+				+ "4 - logoff de usuario\n" + "exit\n";
 
-        System.out.println(menu);
-        do {
+		System.out.println(menu);
+		do {
 
-            input = scanner.nextLine();
+			input = scanner.nextLine();
 
-            switch (input) {
-                case "1": {
-                    Client client = createUsuario();
-                    try {
-                        System.out.println(client.getServico().registrar(client.getNome(), client).getMsg());
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    break;
+			switch (input) {
+			case "1": {
+				Client client = createUsuario();
+				try {
+					System.out.println(client.getServico().registrar(client.getNome(), client).getMsg());
+				} catch (RemoteException ex) {
+					Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+				}
+				break;
 
-                }
-                case "2": {
-                    System.out.println("Digite o nome do usuario que voce deseja utilizar: ");
-                    String emissor = scanner.nextLine();
-                    Client client = usuarios.get(emissor);
+			}
+			case "2": {
+				System.out.println("Digite o nome do usuario que voce deseja utilizar: ");
+				String emissor = scanner.nextLine();
+				Client client = usuarios.get(emissor);
 
-                    if (!checkClient(client)) {
-                        System.out.println("Emissor inexistente");
-                        continue;
-                    }
-                    System.out.println("Digite o nome do usuario que voce deseja enviar a mensagem: ");
-                    String receptor = scanner.nextLine();
-                    Client clientReceptor = usuarios.get(emissor);
-                    if (!checkClient(clientReceptor)) {
-                        System.out.println("Receptor inexistente");
-                        continue;
-                    }
-                    System.out.println("Digite a mensagem: ");
-                    String msg = scanner.nextLine();
+				if (!checkClient(client)) {
+					System.out.println("Emissor inexistente");
+					continue;
+				}
+				System.out.println("Digite o nome do usuario que voce deseja enviar a mensagem: ");
+				String receptor = scanner.nextLine();
+				Client clientReceptor = usuarios.get(emissor);
+				if (!checkClient(clientReceptor)) {
+					System.out.println("Receptor inexistente");
+					continue;
+				}
+				System.out.println("Digite a mensagem: ");
+				String msg = scanner.nextLine();
 
-                    Response response = null;
-                    try {
-                        response = client.getServico().enviarMsgPrivada(emissor, receptor, msg);
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    System.out.println(
-                            response != null
-                                    ? response.isSuccess()
-                                            ? response.getMsg()
-                                            : "Mensagem não enviada"
-                                    : "Erro"
-                    );
+				Response response = null;
+				try {
+					response = client.getServico().enviarMsgPrivada(emissor, receptor, msg);
+				} catch (RemoteException ex) {
+					Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+				}
+				System.out.println(
+						response != null ? response.isSuccess() ? response.getMsg() : "Mensagem não enviada" : "Erro");
 
-                    break;
-                }
-                case "3": {
-                    System.out.println("Digite o nome do usuario que voce deseja utilizar: ");
-                    String emissor = scanner.nextLine();
+				break;
+			}
+			case "3": {
+				System.out.println("Digite o nome do usuario que voce deseja utilizar: ");
+				String emissor = scanner.nextLine();
 
-                    Client client = usuarios.get(emissor);
+				Client client = usuarios.get(emissor);
 
-                    if (!checkClient(client)) {
-                        System.out.println("Emissor inexistente");
-                        continue;
-                    }
+				if (!checkClient(client)) {
+					System.out.println("Emissor inexistente");
+					continue;
+				}
 
-                    System.out.println("Digite a mensagem: ");
-                    String msg = scanner.nextLine();
+				System.out.println("Digite a mensagem: ");
+				String msg = scanner.nextLine();
 
-                    try {
-                        client.getServico().enviarMsgPublica(emissor, msg);
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    break;
+				try {
+					client.getServico().enviarMsgPublica(emissor, msg);
+				} catch (RemoteException ex) {
+					Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+				}
+				break;
 
-                }
-                case "4": {
-                    System.out.println("Digite o nome do usuario que voce deseja utilizar: ");
-                    String emissor = scanner.nextLine();
+			}
+			case "4": {
+				System.out.println("Digite o nome do usuario que voce deseja utilizar: ");
+				String emissor = scanner.nextLine();
 
-                    Client client = usuarios.get(emissor);
+				Client client = usuarios.get(emissor);
 
-                    if (!checkClient(client)) {
-                        System.out.println("Usuario inexistente");
-                        continue;
-                    }
-                    System.out.println("Você desconectou.");
-                }
-            }
+				if (!checkClient(client)) {
+					System.out.println("Usuario inexistente");
+					continue;
+				}
+				System.out.println("Você desconectou.");
+			}
+			}
 
-        } while (!input.equals("exit"));
-    }
+		} while (!input.equals("exit"));
+	}
 
-    private static Client createUsuario() {
-        System.out.println("Digite o nome do usuario: ");
-        String nome = scanner.next();
-        System.out.println("Digite a porta: ");
-        int port = scanner.nextInt();
-        Client client = new Client(nome, port);
-        usuarios.put(nome, client);
-        return client;
-    }
+	private static Client createUsuario() {
+		System.out.println("Digite o nome do usuario: ");
+		String nome = scanner.next();
+		System.out.println("Digite a porta: ");
+		int port = scanner.nextInt();
+		Client client = new Client(nome, port);
+		usuarios.put(nome, client);
+		return client;
+	}
 
-    private static boolean checkClient(Client client) {
-        return client != null;
-    }
+	private static boolean checkClient(Client client) {
+		return client != null;
+	}
 
 }
