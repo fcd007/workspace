@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ExemploSqlite</string>
+    <string name="cadastrar_turma">Cadastrar Turma</string>
+    <string name="listar_turma">Listar Turma</string>
+    <string name="descricao">Descricao</string>
+    <string name="salvar">Salvar</string>
+    <string name="descricao_obrigatoria">O campo Descricao é obrigatório</string>
+    <string name="catastrofico">Falha Catastrófica</string>
+
+</resources>
