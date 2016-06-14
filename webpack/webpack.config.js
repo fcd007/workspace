@@ -10,7 +10,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.css$/, loader: "style!css?modules!postcss"},
+      {test: /\.css$/, loader: "style!css?"},
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -25,9 +25,9 @@ module.exports = {
     inline: true,
     // hot: true
   },
-  postcss: [
-    require('autoprefixer')
-  ],
+  // postcss: [
+    // require('autoprefixer')
+  // ],
   plugins: [
     //Add this text to the top of the genereted file
     new webpack.BannerPlugin("Copyright Flying Unicorns inc."),
