@@ -9,6 +9,7 @@ let cardsList= [
     title: "Read the Book",
     description: "Please, read this book",
     status: "in-progress",
+    color: '#BD8D31',
     tasks: [
 
     ]
@@ -18,6 +19,7 @@ let cardsList= [
     title: "Second Thing",
     description: "Thing to do",
     status: "todo",
+    color: '#f5f5f5',
     tasks: [
       {
         id: 1,
@@ -36,6 +38,7 @@ let cardsList= [
     title: "Do the rest",
     description: "...",
     status: "in-progress",
+    color: "blue",
     tasks: [
       {
         id: 1,
