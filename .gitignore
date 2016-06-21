@@ -62,3 +62,6 @@ hs_err_pid*
 /TarefaRMI/build/
 /TarefaRMI/dist/
 /EmailRmi/nbproject/private/
+
+/webpack/node_modules/
+/webpack/build
