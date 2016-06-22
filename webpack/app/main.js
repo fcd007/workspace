@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import KanbanBoard from './KanbanBoard.js';
 import styles from './dist/style.css';
+import ContactsApp from './components/ContactList/ContactsApp.js';
 
 let cardsList= [
   {
@@ -35,7 +36,7 @@ let cardsList= [
   },
   {
     id: 3,
-    title: "Do the rest",
+    title: "Do the restn",
     description: "...",
     status: "in-progress",
     color: "blue",
@@ -55,3 +56,4 @@ let cardsList= [
 ];
 
 render(<KanbanBoard cards={cardsList} />, document.getElementById('root'));
+render(<ContactsApp />, document.getElementById('teste'));
