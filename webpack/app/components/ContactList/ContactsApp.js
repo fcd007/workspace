@@ -1,19 +1,17 @@
 import React, {Component, PropTypes} from 'react';
 import SearchBar from './SearchBar.js';
 import ContactList from './ContactList.js';
+import TutorialComponent from './TutorialComponent.js';
 
-class ContactsApp extends Component{
-	constructor(){
-		super();
-		this.state={
-			filterText: ''
-		};
-	}
+class ContactsApp extends TutorialComponent{
 
 	handleUserInput(searchTerm){
 		this.setState({filterText: searchTerm});
 	}
+	
+	/*render the components*/
 	render(){
+		console.log("ContactsApp render called");
 		return (
 			<div>
 				<SearchBar	filterText={this.state.filterText}
