@@ -7,11 +7,18 @@ class ContactsApp extends Component{
 			filterText: ''
 		};
 	}
+
+	handleUserInput(searchTerm){
+		this.setState({filterText: searchTerm});
+	}
 	render(){
 		return (
 			<div>
-				<SearchBar filterText={this.state.filterText}/>
-				<ContactList contacts={this.props.contacts}/>
+				<SearchBar	filterText={this.state.filterText}
+									 	onUserInput={this.handleUserInput.bind(this)} />
+									 	
+				<ContactList  filterText={this.state.filterText}
+											contacts={this.props.contacts} />
 			</div>
 		);
 	}
@@ -32,15 +39,21 @@ ContactsApp.defaultProps = {
 
 
 class SearchBar extends Component{
+	handleChange(event){
+		this.props.onUserInput(event.target.value);
+	}
 	render(){
+		console.log("ola");
 		return (
 			<input  type="search" placeholder="search"
+							onChange={this.handleChange.bind(this)}
 							value={this.props.filterText} />
 		);
 	}
 }
 
 SearchBar.propTypes = {
+	onUserInput: PropTypes.func.isRequired,
 	filterText: PropTypes.string.isRequired
 }
 

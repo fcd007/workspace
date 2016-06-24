@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   //Good for debug, it keep's the reference of the original source.
   devtool: 'source-map',
@@ -33,7 +34,7 @@ module.exports = {
     new webpack.BannerPlugin("Copyright Flying Unicorns inc."),
     new HtmlWebpackPlugin({
       template: __dirname + "/app/index.tmpl.html"
-    }),
+    })
     // new webpack.HotModuleReplacementPlugin()
   ]
 };
